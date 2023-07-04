@@ -1,4 +1,7 @@
-﻿void RunPersonDialog(TextReader input, TextWriter output, out Person person)
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+void RunPersonDialog(TextReader input, TextWriter output, out Person person)
 {
     void ReadLine(out string data)
     {
