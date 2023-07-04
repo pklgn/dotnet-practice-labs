@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubbleSort", "BubbleSort\BubbleSort.csproj", "{A3C5D3E2-E730-474D-AA1E-21F60DEEBC1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalInfoReader", "PersonalInfoReader\PersonalInfoReader.csproj", "{8C86530E-317F-4B30-B709-EAC2CACDECB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A3C5D3E2-E730-474D-AA1E-21F60DEEBC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3C5D3E2-E730-474D-AA1E-21F60DEEBC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3C5D3E2-E730-474D-AA1E-21F60DEEBC1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C86530E-317F-4B30-B709-EAC2CACDECB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C86530E-317F-4B30-B709-EAC2CACDECB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C86530E-317F-4B30-B709-EAC2CACDECB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C86530E-317F-4B30-B709-EAC2CACDECB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
