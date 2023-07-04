@@ -2,9 +2,15 @@
 {
 				static void Main()
 				{
-								List<int> input = new() { 30, 1, 3 };
+        Console.WriteLine("Test case 1");
+								List<int> input = new() { 30, 1, 3, -4 };
 								BubbleSort(input);
 								input.ForEach(item => Console.WriteLine(item));
+
+        Console.WriteLine("\nTest case 2");
+        List<string> stringInput = new() { "Dell", "Apple", "IBM", "Oracle", "cisco", "Cisco Systems" };
+        BubbleSort(stringInput);
+        stringInput.ForEach(item => Console.WriteLine(item));
 				}
 
 				static void BubbleSort<T>(IList<T> list, IComparer<T> comparer)
