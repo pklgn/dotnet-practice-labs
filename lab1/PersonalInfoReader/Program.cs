@@ -1,29 +1,28 @@
 ﻿void RunPersonDialog(TextReader input, TextWriter output, out Person person)
 {
+    void ReadLine(out string data)
+    {
+        string? rawData = input.ReadLine();
+        if (rawData == null)
+        {
+            rawData = "*No data was provided*";
+        }
+
+        data = rawData;
+    }
+
     output.WriteLine("Enter person info, please:");
     output.Write("Name: ");
-    string? name = input.ReadLine();
-    if (name == null)
-    {
-        name = "*No name was provided*";
-    }
+    ReadLine(out string name);
 
     output.Write("Age: ");
     int.TryParse(input.ReadLine(), out int age);
 
     output.Write("Email: ");
-    string? email = input.ReadLine();
-    if (email == null)
-    {
-        email = "*No email was provided*";
-    }
+    ReadLine(out string email);
 
     output.Write("Github: ");
-    string? github = input.ReadLine();
-    if (github == null)
-    {
-        github = "*No github was provided*";
-    }
+    ReadLine(out string github);
 
     person = new Person(name, age, email, github);
 }
