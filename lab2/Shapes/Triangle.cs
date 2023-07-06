@@ -22,7 +22,7 @@ public class Triangle : IShape
 
         return Math.Sqrt(perimeter / 2 *
             (perimeter / 2 - _vertex1.GetDistance(_vertex2)) *
-            (perimeter / 2 - _vertex1.GetDistance(_vertex3)) *
+            (perimeter / 2 - _vertex2.GetDistance(_vertex3)) *
             (perimeter / 2 - _vertex1.GetDistance(_vertex3)));
     }
 

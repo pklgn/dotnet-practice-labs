@@ -8,6 +8,12 @@ public class Point
     double _x;
     double _y;
 
+    public Point(double x, double y)
+    {
+        X = x;
+        Y = y;
+    }
+
     public double X { get => _x; set => _x = value; }
     public double Y { get => _y; set => _y = value; }
 

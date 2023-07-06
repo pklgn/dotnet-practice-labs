@@ -10,6 +10,11 @@ public class Square : IShape
 
     public Square(Point leftTop, double side)
     {
+        if (side < 0)
+        {
+            throw new ArgumentException("Square side cannot be negative");
+        }
+
         _leftTop = leftTop;
         _side = side;
     }
