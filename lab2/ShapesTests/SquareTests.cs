@@ -69,8 +69,10 @@ public class SquareTests
         // Arrange
         string exMessage = "Square side cannot be negative";
 
+        // Act
         ArgumentException ex = Assert.Throws<ArgumentException>(() => new Square(new Point(0, 0), -1));
 
+        // Assert
         Assert.That(ex.Message, Is.EqualTo(exMessage));
     }
 }
