@@ -11,7 +11,6 @@ public class StarHasAbsoluteMagnitudeConfiguration : IEntityTypeConfiguration<St
         builder.ToTable("StarHasAbsoluteMagnitude").HasKey(pt => pt.Id);
 
         builder.Property(s => s.AbsoluteMagnitude)
-            .HasPrecision(10)
             .HasColumnName("AbsoluteMagnitude");
         builder.Property(s => s.StartDate)
             .HasColumnName("StartDate");

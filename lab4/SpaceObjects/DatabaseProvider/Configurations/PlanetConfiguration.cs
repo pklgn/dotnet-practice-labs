@@ -14,13 +14,10 @@ public class PlanetConfiguration : IEntityTypeConfiguration<Planet>
             .HasMaxLength(32)
             .HasColumnName("Name");
         builder.Property(p => p.Diameter)
-            .HasPrecision(10)
             .HasColumnName("Diameter");
         builder.Property(p => p.Mass)
-            .HasPrecision(10)
             .HasColumnName("Mass");
         builder.Property(p => p.SurfaceTemperature)
-            .HasPrecision(2)
             .HasColumnName("SurfaceTemperature");
         builder.Property(p => p.DiscoveryDate)
             .HasColumnName("DiscoveryDate");

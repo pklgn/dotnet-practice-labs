@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseProvider", "DatabaseProvider\DatabaseProvider.csproj", "{A520F549-81A3-4DC4-9CA6-29E35BBE42DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceObjectsMigrations", "SpaceObjectsMigrations\SpaceObjectsMigrations.csproj", "{912121CC-D8BB-4199-99F1-B20852DB57DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A520F549-81A3-4DC4-9CA6-29E35BBE42DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A520F549-81A3-4DC4-9CA6-29E35BBE42DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A520F549-81A3-4DC4-9CA6-29E35BBE42DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{912121CC-D8BB-4199-99F1-B20852DB57DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{912121CC-D8BB-4199-99F1-B20852DB57DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{912121CC-D8BB-4199-99F1-B20852DB57DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{912121CC-D8BB-4199-99F1-B20852DB57DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

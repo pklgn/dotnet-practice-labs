@@ -14,16 +14,12 @@ public class StarConfiguration : IEntityTypeConfiguration<Star>
             .HasMaxLength(32)
             .HasColumnName("Name");
         builder.Property(s => s.Diameter)
-            .HasPrecision(10)
             .HasColumnName("Diameter");
         builder.Property(s => s.Mass)
-            .HasPrecision(10)
             .HasColumnName("Mass");
         builder.Property(s => s.Magnitude)
-            .HasPrecision(10)
             .HasColumnName("Magnitude");
         builder.Property(s => s.Temperature)
-            .HasPrecision(2)
             .HasColumnName("Temperature");
         builder.Property(s => s.DiscoveryDate)
             .HasColumnName("DiscoveryDate");
