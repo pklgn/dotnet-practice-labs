@@ -112,8 +112,8 @@ namespace BookShop
         public static void DeletePlanet(List<string> parameters)
         {
             int planetId = int.Parse(parameters[0]);
-            Planet book = _planetRepository.GetById(planetId);
-            _planetRepository.Remove(book);
+            Planet planet = _planetRepository.GetById(planetId);
+            _planetRepository.Remove(planet);
             _planetRepository.SaveChanges();
         }
 

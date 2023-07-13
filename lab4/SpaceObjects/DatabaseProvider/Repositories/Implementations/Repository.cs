@@ -3,42 +3,42 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseProvider.Repositories.Implementations
 {
-				public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
-				{
-								// получили перечисление, которое на самом деле таблица
-								protected DbSet<TEntity> Entities { get; }
-								private readonly ApplicationContext _context;
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    {
+        // получили перечисление, которое на самом деле таблица
+        protected DbSet<TEntity> Entities { get; }
+        private readonly ApplicationContext _context;
 
-								public Repository(ApplicationContext context)
-								{
-												_context = context;
-												// set здесь существительное
-												Entities = _context.Set<TEntity>();
-								}
+        public Repository(ApplicationContext context)
+        {
+            _context = context;
+            // set здесь существительное
+            Entities = _context.Set<TEntity>();
+        }
 
-								public void Add(TEntity entity)
-								{
-												Entities.Add(entity);
-								}
+        public void Add(TEntity entity)
+        {
+            Entities.Add(entity);
+        }
 
-								public void Add(IEnumerable<TEntity> entities)
-								{
-												Entities.AddRange(entities);
-								}
+        public void Add(IEnumerable<TEntity> entities)
+        {
+            Entities.AddRange(entities);
+        }
 
-								public void Remove(TEntity entity)
-								{
-												Entities.Remove(entity);
-								}
+        public void Remove(TEntity entity)
+        {
+            Entities.Remove(entity);
+        }
 
-								public void Remove(IEnumerable<TEntity> entities)
-								{
-												Entities.RemoveRange(entities);
-								}
+        public void Remove(IEnumerable<TEntity> entities)
+        {
+            Entities.RemoveRange(entities);
+        }
 
-								public void SaveChanges()
-								{
-												_context.SaveChanges();
-								}
-				}
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+    }
 }
