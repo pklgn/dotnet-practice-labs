@@ -10,7 +10,6 @@
     background-color: #f2f2f2;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
     font-size: 18px;
     font-weight: bold;
     color: #333;
@@ -18,5 +17,9 @@
 }
 
 .calculation-table {
-    display: inline-block;
+    display: inline-flex;
+}
+
+.operator {
+    align-self: center;
 }

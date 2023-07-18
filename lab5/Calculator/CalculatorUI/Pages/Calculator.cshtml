@@ -37,23 +37,39 @@
 {
     <h1>Calculator Result: @Model.ArithmeticOperation.Result</h1>
     <div class="calculation-table">
-        <div class="number-block-container">
-        @foreach (var digit in Model.LeftOperandDigits)
-        {
-            <div class="number-block">@digit</div>
-        }
+
+        <div>
+            <div class="operator">@Model.ArithmeticOperation.OperatorSymbol</div>
         </div>
-        <div class="number-block-container">
-        @foreach (var digit in Model.RightOperandDigits)
-        {
-            <div class="number-block">@digit</div>
-        }
-        </div>
-        <div class="number-block-container">
-        @foreach (var digit in Model.ResultDigits)
-        {
-            <div class="number-block">@digit</div>
-        }
+        <div>
+            <div class="number-block-container">
+            @foreach (var digit in Model.AuxiliaryDigits)
+            {
+                <div class="number-block">@digit</div>
+            }
+            </div>
+            <div class="number-block-container">
+            @foreach (var digit in Model.LeftOperandDigits)
+            {
+                <div class="number-block">@digit</div>
+            }
+            </div>
+            <div class="number-block-container">
+            @foreach (var digit in Model.RightOperandDigits)
+            {
+                <div class="number-block">@digit</div>
+            }
+            </div>
+            <div class="number-block-container">
+            @if (Model.ArithmeticOperation.Result < 0)
+            {
+                <div class="number-block">-</div>
+            }
+            @foreach (var digit in Model.ResultDigits)
+            {
+                <div class="number-block">@digit</div>
+            }
+            </div>
         </div>
     </div>
 }

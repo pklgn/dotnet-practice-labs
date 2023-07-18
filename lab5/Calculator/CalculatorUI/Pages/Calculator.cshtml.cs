@@ -1,3 +1,4 @@
+using System;
 using CalculatorUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,6 +16,8 @@ namespace CalculatorUI.Pages
         public List<int> RightOperandDigits { get; set; } = new();
         public List<int> ResultDigits { get; set; } = new();
 
+        public List<int> AuxiliaryDigits { get; set; } = new();
+
         public bool NeedOperandsSwap { get; set; } = false;
 
         public void OnGet()
@@ -24,14 +27,80 @@ namespace CalculatorUI.Pages
         public IActionResult OnPost()
         {
             ArithmeticOperation!.ExecuteOperation();
-            NeedOperandsSwap = (ArithmeticOperation.LeftOperand < ArithmeticOperation.RightOperand);
+
+            List<int> leftOperandSplitted = SplitDigits(ArithmeticOperation.LeftOperand);
+            List<int> rightOperandSplitted = SplitDigits(ArithmeticOperation.RightOperand);
+
+            NeedOperandsSwap = (leftOperandSplitted.Count < rightOperandSplitted.Count);
+
             LeftOperandDigits = NeedOperandsSwap
-                ? SplitDigits(ArithmeticOperation.RightOperand)
-                : SplitDigits(ArithmeticOperation.LeftOperand);
+                ? rightOperandSplitted
+                : leftOperandSplitted;
             RightOperandDigits = NeedOperandsSwap
-                ? SplitDigits(ArithmeticOperation.LeftOperand)
-                : SplitDigits(ArithmeticOperation.RightOperand);
+                ? leftOperandSplitted
+                : rightOperandSplitted;
             ResultDigits = SplitDigits(ArithmeticOperation.Result);
+
+            List<int> leftOperandSplittedCopy = new(leftOperandSplitted);
+            leftOperandSplittedCopy.Reverse();
+            List<int> rightOperandSplittedCopy = new(rightOperandSplitted);
+            rightOperandSplittedCopy.Reverse();
+            if (NeedOperandsSwap)
+            {
+                AuxiliaryDigits = new(rightOperandSplittedCopy);
+                for (int i = 0; i < AuxiliaryDigits.Count; i++)
+                {
+                    AuxiliaryDigits[i] = 0;
+                }
+
+                if (ArithmeticOperation.OperatorSymbol == "+")
+                {
+                    for (int i = 0; i < leftOperandSplitted.Count; ++i)
+                    {
+                        if (leftOperandSplitted[i] + rightOperandSplitted[i] > 10)
+                        {
+                            AuxiliaryDigits[i + 1] = 1;
+                        }
+                    }
+                }
+                else if (ArithmeticOperation.OperatorSymbol == "-")
+                {
+                    for (int i = 0; i < leftOperandSplittedCopy.Count; ++i)
+                    {
+                        if (leftOperandSplittedCopy[i] - rightOperandSplittedCopy[i] < 0)
+                        {
+                            AuxiliaryDigits[i] = 10;
+                            AuxiliaryDigits[i + 1] = -1;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // TODO: подумать, как избавиться от этого дублирующегося кода
+                AuxiliaryDigits = new(leftOperandSplitted);
+                for (int i = 0; i < AuxiliaryDigits.Count; i++)
+                {
+                    AuxiliaryDigits[i] = 0;
+                }
+
+                if (ArithmeticOperation.OperatorSymbol == "+")
+                {
+                    for (int i = 0; i < rightOperandSplitted.Count; ++i)
+                    {
+                        if (leftOperandSplittedCopy[i] + rightOperandSplittedCopy[i] >= 10)
+                        {
+                            AuxiliaryDigits[i + 1] = 1;
+                        }
+                    }
+                }
+                else if (ArithmeticOperation.OperatorSymbol == "-")
+                {
+                    // TODO: реализовать для вычитания
+                }
+            }
+            AuxiliaryDigits.Reverse();
+
 
             return Page();
         }
@@ -39,6 +108,10 @@ namespace CalculatorUI.Pages
         private static List<int> SplitDigits(int number)
         {
             List<int> digits = new List<int>();
+            if (number < 0)
+            {
+                number = -number;
+            }
 
             while (number > 0)
             {
