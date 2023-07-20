@@ -10,9 +10,7 @@ namespace CalculatorUI.Pages
         [BindProperty]
         public ArithmeticOperation? ArithmeticOperation { get; set; }
 
-        [BindProperty]
         public List<int> LeftOperandDigits { get; set; } = new();
-
         public List<int> RightOperandDigits { get; set; } = new();
         public List<int> ResultDigits { get; set; } = new();
 
@@ -67,7 +65,7 @@ namespace CalculatorUI.Pages
                 {
                     for (int i = 0; i < leftOperandSplittedCopy.Count; ++i)
                     {
-                        if (leftOperandSplittedCopy[i] - rightOperandSplittedCopy[i] < 0)
+                        if (rightOperandSplittedCopy[i] - leftOperandSplittedCopy[i] < 0)
                         {
                             AuxiliaryDigits[i] = 10;
                             AuxiliaryDigits[i + 1] = -1;
@@ -96,7 +94,14 @@ namespace CalculatorUI.Pages
                 }
                 else if (ArithmeticOperation.OperatorSymbol == "-")
                 {
-                    // TODO: реализовать для вычитания
+                    for (int i = 0; i < rightOperandSplittedCopy.Count; ++i)
+                    {
+                        if (leftOperandSplittedCopy[i] - rightOperandSplittedCopy[i] < 0)
+                        {
+                            AuxiliaryDigits[i] = 10;
+                            AuxiliaryDigits[i + 1] = -1;
+                        }
+                    }
                 }
             }
             AuxiliaryDigits.Reverse();
