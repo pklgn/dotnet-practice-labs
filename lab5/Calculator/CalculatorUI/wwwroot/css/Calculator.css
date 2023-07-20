@@ -1,11 +1,10 @@
 ﻿.vertical-form {
-    display: inline-flex;
-    flex-direction: column;
+    display: grid
 }
 
 .vertical-form__operator {
     display: inline-flex;
-    padding-top: 85px;
+    padding-top: 70px;
     font-size: 18px;
     font-weight: bold;
 }
@@ -16,6 +15,7 @@
 
 .vertical-form__operands {
     display: flex;
+    justify-content: center;
 }
 
 .vertical-form__number {
@@ -52,4 +52,16 @@
     align-self: center;
     font-size: 18px;
     font-weight: bold;
+}
+
+.vertical-form__auxiliary-digit {
+    display: flex;
+    flex: 1 1 0;
+    width: 0;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 18px 5px 18px;
+    font-size: 10px;
+    color: #333;
+    justify-self: end;
 }

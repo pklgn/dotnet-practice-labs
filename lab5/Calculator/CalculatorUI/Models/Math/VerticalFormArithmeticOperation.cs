@@ -15,7 +15,7 @@ namespace CalculatorUI.Models.Math
 
         public List<int> AuxiliaryDigits { get; set; } = new();
 
-        private bool NeedOperandsSwap { get; set; } = false;
+        public bool NeedOperandsSwap { get; private set; } = false;
 
         public override void Execute()
         {

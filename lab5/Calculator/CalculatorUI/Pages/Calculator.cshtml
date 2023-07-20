@@ -36,41 +36,56 @@
 
 @if (Model.Operation != null)
 {
-    <h1>Calculator Result: @Model.Operation.Result</h1>
-    <div class="vertical-form">
-        <div class="vertical-form__operands">
-            <div class="vertical-form__operator">@Model.Operation.OperatorSymbol</div>
-            <div>
-                <div class="vertical-form__number">
-                    @foreach (var digit in Model.Operation.AuxiliaryDigits)
-                    {
-                        <div class="vertical-form__digit">@digit</div>
-                    }
-                </div>
-                <div class="vertical-form__number">
-                    @foreach (var digit in Model.Operation.LeftOperandDigits)
-                    {
-                        <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
-                    }
-                </div>
-                <div class="vertical-form__number">
-                    @foreach (var digit in Model.Operation.RightOperandDigits)
-                    {
-                        <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
-                    }
-                </div>
-                <div class="vertical-form__line"></div>
-            </div>
+    <div class="mt-3">
+        <h1>Result</h1>
+        <div>
+            @*TODO: refactor this block*@
+            @if (@Model.Operation.Result < 0)
+            {
+                @Model.Operation.RightOperand @Model.Operation.OperatorSymbol @Model.Operation.LeftOperand @:= 
+                @:@Model.Operation.OperatorSymbol (@Model.Operation.LeftOperand @Model.Operation.OperatorSymbol @Model.Operation.RightOperand) =
+            }
+            else
+            {
+                @:@Model.Operation.LeftOperand @Model.Operation.OperatorSymbol @Model.Operation.RightOperand =
+            }
+            @Model.Operation.Result
         </div>
-        <div class="vertical-form__operands">
-            <div class="vertical-form__result-operator @(@Model.Operation.Result >= 0 ? "vertical-form__operator_hidden" : "")">
-                @((@Model.Operation.Result < 0) ? "−" : "+")
+        <div class="vertical-form">
+            <div class="vertical-form__operands">
+                <div class="vertical-form__operator">@Model.Operation.OperatorSymbol</div>
+                <div>
+                    <div class="vertical-form__number">
+                        @foreach (var digit in Model.Operation.AuxiliaryDigits)
+                        {
+                            <div class="vertical-form__auxiliary-digit">@digit</div>
+                        }
+                    </div>
+                    <div class="vertical-form__number">
+                        @foreach (var digit in Model.Operation.LeftOperandDigits)
+                        {
+                            <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
+                        }
+                    </div>
+                    <div class="vertical-form__number">
+                        @foreach (var digit in Model.Operation.RightOperandDigits)
+                        {
+                            <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
+                        }
+                    </div>
+                    <div class="vertical-form__line"></div>
+                </div>
             </div>
-            <div class="vertical-form__number">
-                @foreach (var digit in Model.Operation.ResultDigits)
-                {
-                    <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
-                }
+            <div class="vertical-form__operands">
+                <div class="vertical-form__result-operator @(@Model.Operation.Result >= 0 ? "vertical-form__operator_hidden" : "")">
+                    @((@Model.Operation.Result < 0) ? "−" : "+")
+                </div>
+                <div class="vertical-form__number">
+                    @foreach (var digit in Model.Operation.ResultDigits)
+                    {
+                        <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
+                    }
+                </div>
             </div>
         </div>
     </div>
