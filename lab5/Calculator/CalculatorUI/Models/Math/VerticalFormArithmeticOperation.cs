@@ -62,6 +62,14 @@ namespace CalculatorUI.Models.Math
         protected static List<int> SplitIntoDigits(int number)
         {
             List<int> digits = new List<int>();
+
+            if (number == 0)
+            {
+                digits.Add(0);
+
+                return digits;
+            }
+
             if (number < 0)
             {
                 number = -number;
