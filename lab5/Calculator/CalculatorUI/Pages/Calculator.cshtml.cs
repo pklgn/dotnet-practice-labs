@@ -1,4 +1,3 @@
-using System;
 using CalculatorUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -24,12 +23,13 @@ namespace CalculatorUI.Pages
 
         public IActionResult OnPost()
         {
-            ArithmeticOperation!.ExecuteOperation();
+            ArithmeticOperation!.Execute();
 
             List<int> leftOperandSplitted = SplitDigits(ArithmeticOperation.LeftOperand);
             List<int> rightOperandSplitted = SplitDigits(ArithmeticOperation.RightOperand);
 
-            NeedOperandsSwap = (leftOperandSplitted.Count < rightOperandSplitted.Count);
+            NeedOperandsSwap = (leftOperandSplitted.Count < rightOperandSplitted.Count)
+                || (ArithmeticOperation!.Operator == ArithmeticOperation.OperatorType.Subtraction && ArithmeticOperation.LeftOperand < ArithmeticOperation.RightOperand);
 
             LeftOperandDigits = NeedOperandsSwap
                 ? rightOperandSplitted
@@ -39,73 +39,7 @@ namespace CalculatorUI.Pages
                 : rightOperandSplitted;
             ResultDigits = SplitDigits(ArithmeticOperation.Result);
 
-            List<int> leftOperandSplittedCopy = new(leftOperandSplitted);
-            leftOperandSplittedCopy.Reverse();
-            List<int> rightOperandSplittedCopy = new(rightOperandSplitted);
-            rightOperandSplittedCopy.Reverse();
-            if (NeedOperandsSwap)
-            {
-                AuxiliaryDigits = new(rightOperandSplittedCopy);
-                for (int i = 0; i < AuxiliaryDigits.Count; i++)
-                {
-                    AuxiliaryDigits[i] = 0;
-                }
-
-                if (ArithmeticOperation.OperatorSymbol == "+")
-                {
-                    for (int i = 0; i < leftOperandSplitted.Count; ++i)
-                    {
-                        if (leftOperandSplitted[i] + rightOperandSplitted[i] > 10)
-                        {
-                            AuxiliaryDigits[i + 1] = 1;
-                        }
-                    }
-                }
-                else if (ArithmeticOperation.OperatorSymbol == "-")
-                {
-                    for (int i = 0; i < leftOperandSplittedCopy.Count; ++i)
-                    {
-                        if (rightOperandSplittedCopy[i] - leftOperandSplittedCopy[i] < 0)
-                        {
-                            AuxiliaryDigits[i] = 10;
-                            AuxiliaryDigits[i + 1] = -1;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // TODO: подумать, как избавиться от этого дублирующегося кода
-                AuxiliaryDigits = new(leftOperandSplitted);
-                for (int i = 0; i < AuxiliaryDigits.Count; i++)
-                {
-                    AuxiliaryDigits[i] = 0;
-                }
-
-                if (ArithmeticOperation.OperatorSymbol == "+")
-                {
-                    for (int i = 0; i < rightOperandSplitted.Count; ++i)
-                    {
-                        if (leftOperandSplittedCopy[i] + rightOperandSplittedCopy[i] >= 10)
-                        {
-                            AuxiliaryDigits[i + 1] = 1;
-                        }
-                    }
-                }
-                else if (ArithmeticOperation.OperatorSymbol == "-")
-                {
-                    for (int i = 0; i < rightOperandSplittedCopy.Count; ++i)
-                    {
-                        if (leftOperandSplittedCopy[i] - rightOperandSplittedCopy[i] < 0)
-                        {
-                            AuxiliaryDigits[i] = 10;
-                            AuxiliaryDigits[i + 1] = -1;
-                        }
-                    }
-                }
-            }
-            AuxiliaryDigits.Reverse();
-
+            CalculateAuxiliaryDigits();
 
             return Page();
         }
@@ -128,6 +62,60 @@ namespace CalculatorUI.Pages
             digits.Reverse();
 
             return digits;
+        }
+
+        private void CalculateAuxiliaryDigits()
+        {
+            List<int> leftOperandSplitted = new(LeftOperandDigits);
+            List<int> rightOperandSplitted = new(RightOperandDigits);
+            
+            leftOperandSplitted.Reverse();
+            rightOperandSplitted.Reverse();
+
+            ResizeAuxiliaryDigits(leftOperandSplitted.Count);
+
+            switch (ArithmeticOperation!.Operator)
+            {
+                case ArithmeticOperation.OperatorType.Addition:
+                    for (int i = 0; i < rightOperandSplitted.Count; ++i)
+                    {
+                        if (leftOperandSplitted[i] + rightOperandSplitted[i] > 10)
+                        {
+                            AuxiliaryDigits[i + 1] += 1;
+                        }
+                    }
+                    break;
+                case ArithmeticOperation.OperatorType.Subtraction:
+                    for (int i = 0; i < rightOperandSplitted.Count; ++i)
+                    {
+                        if (leftOperandSplitted[i] - rightOperandSplitted[i] < 0)
+                        {
+                            AuxiliaryDigits[i] += 10;
+                            AuxiliaryDigits[i + 1] += -1;
+                        }
+                    }
+                    break;
+                case ArithmeticOperation.OperatorType.Division:
+                    throw new NotImplementedException();
+                case ArithmeticOperation.OperatorType.Multiplication:
+                    throw new NotImplementedException();
+                case ArithmeticOperation.OperatorType.Invalid:
+                    Console.Error.WriteLine("Attempt to perform an invalid operation.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Internal error while calculating auxiliary digits");
+                    break;
+            }
+
+            AuxiliaryDigits.Reverse();
+        }
+
+        private void ResizeAuxiliaryDigits(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                AuxiliaryDigits.Add(0);
+            }
         }
     }
 }

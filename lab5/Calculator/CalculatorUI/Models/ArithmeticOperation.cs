@@ -7,32 +7,75 @@ namespace CalculatorUI.Models
 {
     public class ArithmeticOperation
     {
+        private string _operatorSymbol = "";
+
+        public enum OperatorType
+        {
+            Addition,
+            Subtraction,
+            Division,
+            Multiplication,
+            Invalid
+        };
         public static readonly int NO_RESULT = int.MinValue;
 
+        public string OperatorSymbol
+        {
+            get
+            {
+                return _operatorSymbol;
+            }
+            set
+            {
+                switch (value)
+                {
+                    case "+":
+                        Operator = OperatorType.Addition;
+                        break;
+                    case "-":
+                        Operator = OperatorType.Subtraction;
+                        break;
+                    case "*":
+                        Operator = OperatorType.Multiplication;
+                        break;
+                    case "/":
+                        Operator = OperatorType.Division;
+                        break;
+                    default:
+                        Operator = OperatorType.Invalid;
+                        break;
+                }
+                _operatorSymbol = value;
+            }
+        }
+
         public int LeftOperand { get; set; }
-        public string OperatorSymbol { get; set; } = "";
+        public OperatorType Operator { get; set; } = OperatorType.Invalid;
         public int RightOperand { get; set; }
 
         public int Result { get; set; } = NO_RESULT;
 
-        public void ExecuteOperation()
+        public virtual void Execute()
         {
-            switch (OperatorSymbol)
+            switch (Operator)
             {
-                case "+":
+                case OperatorType.Addition:
                     Result = LeftOperand + RightOperand;
                     break;
-                case "-":
+                case OperatorType.Subtraction:
                     Result = LeftOperand - RightOperand;
                     break;
-                case "*":
-                    Result = LeftOperand * RightOperand;
-                    break;
-                case "/":
+                case OperatorType.Division:
                     Result = LeftOperand / RightOperand;
                     break;
+                case OperatorType.Multiplication:
+                    Result = LeftOperand * RightOperand;
+                    break;
+                case OperatorType.Invalid:
+                    Console.Error.WriteLine("Invalid operator.");
+                    break;
                 default:
-                    Console.WriteLine("Unsupported operator.");
+                    Console.Error.WriteLine("Internal error.");
                     break;
             }
         }
