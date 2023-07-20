@@ -1,19 +1,21 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
+using CalculatorUI.Models.Common;
 
-namespace CalculatorUI.Models
+namespace CalculatorUI.Models.Math
 {
     public class VerticalFormArithmeticOperation : ArithmeticOperation
     {
+        public const int EMPTY_CELL = -1;
+
         public List<int> LeftOperandDigits { get; set; } = new();
         public List<int> RightOperandDigits { get; set; } = new();
         public List<int> ResultDigits { get; set; } = new();
 
         public List<int> AuxiliaryDigits { get; set; } = new();
 
-        public bool NeedOperandsSwap { get; set; } = false;
+        private bool NeedOperandsSwap { get; set; } = false;
 
         public override void Execute()
         {
@@ -22,7 +24,8 @@ namespace CalculatorUI.Models
             List<int> leftOperandDigits = SplitIntoDigits(LeftOperand);
             List<int> rightOperandDigits = SplitIntoDigits(RightOperand);
 
-            NeedOperandsSwap = (leftOperandDigits.Count < rightOperandDigits.Count);
+            NeedOperandsSwap = leftOperandDigits.Count < rightOperandDigits.Count
+                || Operator == OperatorType.Subtraction && LeftOperand < RightOperand;
 
             LeftOperandDigits = NeedOperandsSwap
                 ? rightOperandDigits
@@ -32,7 +35,28 @@ namespace CalculatorUI.Models
                 : rightOperandDigits;
             ResultDigits = SplitIntoDigits(Result);
 
-            CalculateAuxiliaryDigits();
+            FillAuxiliaryDigits();
+        }
+
+        public void PrependEmptyCells(int value = EMPTY_CELL)
+        {
+            int rowCount = new[] {
+                LeftOperandDigits.Count,
+                RightOperandDigits.Count,
+                ResultDigits.Count }.Max();
+
+            for (int i = LeftOperandDigits.Count; i < rowCount; ++i)
+            {
+                LeftOperandDigits = LeftOperandDigits.Prepend(value).ToList();
+            }
+            for (int i = RightOperandDigits.Count; i < rowCount; ++i)
+            {
+                RightOperandDigits = RightOperandDigits.Prepend(value).ToList();
+            }
+            for (int i = ResultDigits.Count; i < rowCount; ++i)
+            {
+                ResultDigits = ResultDigits.Prepend(value).ToList();
+            }
         }
 
         protected static List<int> SplitIntoDigits(int number)
@@ -55,7 +79,7 @@ namespace CalculatorUI.Models
             return digits;
         }
 
-        private void CalculateAuxiliaryDigits()
+        private void FillAuxiliaryDigits()
         {
             List<int> leftOperandDigits = new(LeftOperandDigits);
             List<int> rightOperandDigits = new(RightOperandDigits);
@@ -63,14 +87,20 @@ namespace CalculatorUI.Models
             leftOperandDigits.Reverse();
             rightOperandDigits.Reverse();
 
-            ResizeAuxiliaryDigits(leftOperandDigits.Count);
+            AuxiliaryDigits.Resize(
+                new[] {
+                    LeftOperandDigits.Count,
+                    RightOperandDigits.Count,
+                    ResultDigits.Count }.Max(),
+                0
+                );
 
             switch (Operator)
             {
                 case OperatorType.Addition:
                     for (int i = 0; i < rightOperandDigits.Count; ++i)
                     {
-                        if (leftOperandDigits[i] + rightOperandDigits[i] > 10)
+                        if (leftOperandDigits[i] + rightOperandDigits[i] + AuxiliaryDigits[i] > 10)
                         {
                             AuxiliaryDigits[i + 1] += 1;
                         }
@@ -79,7 +109,7 @@ namespace CalculatorUI.Models
                 case OperatorType.Subtraction:
                     for (int i = 0; i < rightOperandDigits.Count; ++i)
                     {
-                        if (leftOperandDigits[i] - rightOperandDigits[i] < 0)
+                        if (leftOperandDigits[i] - rightOperandDigits[i] + AuxiliaryDigits[i] < 0)
                         {
                             AuxiliaryDigits[i] += 10;
                             AuxiliaryDigits[i + 1] += -1;
@@ -94,24 +124,11 @@ namespace CalculatorUI.Models
                     Console.Error.WriteLine("Attempt to perform an invalid operation.");
                     break;
                 default:
-                    Console.Error.WriteLine("Internal error while calculating auxiliary digits");
+                    Console.Error.WriteLine("Internal error while filling auxiliary digits.");
                     break;
             }
 
             AuxiliaryDigits.Reverse();
-        }
-
-        private void ResizeAuxiliaryDigits(int count)
-        {
-            int oldCount = AuxiliaryDigits.Count;
-            if (count < oldCount)
-                AuxiliaryDigits.RemoveRange(count, oldCount - count);
-            else if (count > oldCount)
-            {
-                if (count > AuxiliaryDigits.Capacity)
-                    AuxiliaryDigits.Capacity = count;
-                AuxiliaryDigits.AddRange(Enumerable.Repeat(0, count - oldCount));
-            }
         }
     }
 }

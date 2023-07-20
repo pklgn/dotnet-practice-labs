@@ -1,9 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Microsoft.AspNetCore.Mvc;
-
-namespace CalculatorUI.Models
+namespace CalculatorUI.Models.Math
 {
     public class ArithmeticOperation
     {
@@ -32,7 +30,7 @@ namespace CalculatorUI.Models
                     case "+":
                         Operator = OperatorType.Addition;
                         break;
-                    case "-":
+                    case "−":
                         Operator = OperatorType.Subtraction;
                         break;
                     case "*":
@@ -50,7 +48,7 @@ namespace CalculatorUI.Models
         }
 
         public int LeftOperand { get; set; }
-        public OperatorType Operator { get; set; } = OperatorType.Invalid;
+        public OperatorType Operator { get; private set; } = OperatorType.Invalid;
         public int RightOperand { get; set; }
 
         public int Result { get; set; } = NO_RESULT;

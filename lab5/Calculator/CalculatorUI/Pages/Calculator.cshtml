@@ -1,12 +1,13 @@
 ﻿@page
 @using CalculatorUI.Models
+@using CalculatorUI.Models.Math
 @model CalculatorUI.Pages.CalculatorModel
 @{
     ViewData["Title"] = "Calculator";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/Calculator.css" />
+    <link rel="stylesheet" href="~/css/calculator.css" />
     <!-- Дополнительные стили CSS -->
 }
 
@@ -15,60 +16,61 @@
 <form method="post" class="form">
     <div class="form-group">
         <label for="leftOperand">Left operand</label>
-        <input type="number" id="leftOperand" name="leftOperand" asp-for="ArithmeticOperation!.LeftOperand" class="form-control"/>
+        <input type="number" id="leftOperand" name="leftOperand" asp-for="Operation!.LeftOperand" class="form-control"/>
     </div>
     <div class="form-group">
         <label for="operatorSymbol">Choose an operator symbol:</label>
-        <select id="operatorSymbol" name="operatorSymbol" asp-for="ArithmeticOperation!.OperatorSymbol" class="form-control">
+        <select id="operatorSymbol" name="operatorSymbol" asp-for="Operation!.OperatorSymbol" class="form-control">
             <option value="+">+</option>
-            <option value="-">-</option>
+            <option value="−">−</option>
             <option value="*">*</option>
             <option value="/">/</option>
         </select>
     </div>
     <div class="form-group">
         <label for="rightOperand">Right operand</label>
-        <input type="number" id="rightOperand" name="rightOperand" asp-for="ArithmeticOperation!.RightOperand" class="form-control"/>
+        <input type="number" id="rightOperand" name="rightOperand" asp-for="Operation!.RightOperand" class="form-control"/>
     </div>
-    <input type="submit" value="=" class="btn btn-primary"/>
+    <input type="submit" value="=" class="btn btn-primary w-100 mt-3"/>
 </form>
 
-@if (Model.ArithmeticOperation != null)
+@if (Model.Operation != null)
 {
-    <h1>Calculator Result: @Model.ArithmeticOperation.Result</h1>
-    <div class="calculation-table">
-
-        <div>
-            <div class="operator">@Model.ArithmeticOperation.OperatorSymbol</div>
+    <h1>Calculator Result: @Model.Operation.Result</h1>
+    <div class="vertical-form">
+        <div class="vertical-form__operands">
+            <div class="vertical-form__operator">@Model.Operation.OperatorSymbol</div>
+            <div>
+                <div class="vertical-form__number">
+                    @foreach (var digit in Model.Operation.AuxiliaryDigits)
+                    {
+                        <div class="vertical-form__digit">@digit</div>
+                    }
+                </div>
+                <div class="vertical-form__number">
+                    @foreach (var digit in Model.Operation.LeftOperandDigits)
+                    {
+                        <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
+                    }
+                </div>
+                <div class="vertical-form__number">
+                    @foreach (var digit in Model.Operation.RightOperandDigits)
+                    {
+                        <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
+                    }
+                </div>
+                <div class="vertical-form__line"></div>
+            </div>
         </div>
-        <div>
-            <div class="number-block-container">
-            @foreach (var digit in Model.AuxiliaryDigits)
-            {
-                <div class="number-block">@digit</div>
-            }
+        <div class="vertical-form__operands">
+            <div class="vertical-form__result-operator @(@Model.Operation.Result >= 0 ? "vertical-form__operator_hidden" : "")">
+                @((@Model.Operation.Result < 0) ? "−" : "+")
             </div>
-            <div class="number-block-container">
-            @foreach (var digit in Model.LeftOperandDigits)
-            {
-                <div class="number-block">@digit</div>
-            }
-            </div>
-            <div class="number-block-container">
-            @foreach (var digit in Model.RightOperandDigits)
-            {
-                <div class="number-block">@digit</div>
-            }
-            </div>
-            <div class="number-block-container">
-            @if (Model.ArithmeticOperation.Result < 0)
-            {
-                <div class="number-block">-</div>
-            }
-            @foreach (var digit in Model.ResultDigits)
-            {
-                <div class="number-block">@digit</div>
-            }
+            <div class="vertical-form__number">
+                @foreach (var digit in Model.Operation.ResultDigits)
+                {
+                    <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
+                }
             </div>
         </div>
     </div>

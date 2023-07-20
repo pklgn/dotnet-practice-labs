@@ -1,14 +1,36 @@
-﻿.number-block-container {
+﻿.vertical-form {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.vertical-form__operator {
+    display: inline-flex;
+    padding-top: 90px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.vertical-form__operator_hidden {
+    visibility: hidden;
+}
+
+.vertical-form__operands {
+    display: flex;
+}
+
+.vertical-form__number {
     display: flex;
     justify-content: end;
 }
 
-.number-block {
+.vertical-form__digit {
     display: flex;
+    flex: 1 1 0;
+    width: 0;
     justify-content: center;
     align-items: center;
     background-color: #f2f2f2;
-    padding: 10px;
+    padding: 10px 18px;
     border: 1px solid #ccc;
     font-size: 18px;
     font-weight: bold;
@@ -16,10 +38,18 @@
     justify-self: end;
 }
 
-.calculation-table {
-    display: inline-flex;
+.vertical-form__digit_hidden {
+    visibility: hidden;
 }
 
-.operator {
+.vertical-form__line {
+    height: 2px;
+    background-color: black;
+}
+
+.vertical-form__result-operator {
+    display: inline-flex;
     align-self: center;
+    font-size: 18px;
+    font-weight: bold;
 }
