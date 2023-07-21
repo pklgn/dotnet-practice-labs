@@ -6,6 +6,8 @@ namespace CalculatorUI.Models.Math
     public class ArithmeticOperation
     {
         private string _operatorSymbol = "";
+        private int _leftOperand = 0;
+        private int _rightOperand = 0;
 
         public enum OperatorType
         {
@@ -47,14 +49,41 @@ namespace CalculatorUI.Models.Math
             }
         }
 
-        public int LeftOperand { get; set; }
+        public int LeftOperand
+        {
+            get
+            {
+                return _leftOperand;
+            }
+            set
+            {
+                _leftOperand = value;
+                Result = NO_RESULT;
+            }
+        }
         public OperatorType Operator { get; private set; } = OperatorType.Invalid;
-        public int RightOperand { get; set; }
+        public int RightOperand
+        {
+            get
+            {
+                return _rightOperand;
+            }
+            set
+            {
+                _rightOperand = value;
+                Result = NO_RESULT;
+            }
+        }
 
         public int Result { get; set; } = NO_RESULT;
 
         public virtual void Execute()
         {
+            if (Result != NO_RESULT)
+            {
+                return;
+            }
+
             switch (Operator)
             {
                 case OperatorType.Addition:
@@ -70,6 +99,7 @@ namespace CalculatorUI.Models.Math
                     Result = LeftOperand * RightOperand;
                     break;
                 case OperatorType.Invalid:
+                    // TODO: replace with exceptions
                     Console.Error.WriteLine("Invalid operator.");
                     break;
                 default:
