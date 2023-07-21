@@ -15,8 +15,16 @@ namespace CalculatorUI.Pages
 
         public IActionResult OnPost()
         {
-            Operation!.Execute();
-            Operation!.PrependEmptyCells();
+            try
+            {
+                Operation!.Execute();
+                Operation!.PrependEmptyCells();
+            }
+            catch (Exception)
+            {
+                // TODO: maintain detailed exception page
+                return RedirectToPage("/Error");
+            }
 
             return Page();
         }
