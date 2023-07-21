@@ -35,7 +35,7 @@ namespace CalculatorUI.Models.Math
                     case "−":
                         Operator = OperatorType.Subtraction;
                         break;
-                    case "*":
+                    case "⁕":
                         Operator = OperatorType.Multiplication;
                         break;
                     case "/":

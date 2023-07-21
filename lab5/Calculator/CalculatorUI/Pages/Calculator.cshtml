@@ -23,7 +23,7 @@
         <select id="operatorSymbol" name="operatorSymbol" asp-for="Operation!.OperatorSymbol" class="form-control">
             <option value="+">+</option>
             <option value="−">−</option>
-            <option value="*">*</option>
+            <option value="⁕">⁕</option>
             <option value="/">/</option>
         </select>
     </div>
@@ -58,7 +58,9 @@
                     <div class="vertical-form__number">
                         @foreach (var digit in Model.Operation.AuxiliaryDigits)
                         {
-                            <div class="vertical-form__auxiliary-digit">@digit</div>
+                            <div class="vertical-form__auxiliary-digit @(Model.Operation.Operator == ArithmeticOperation.OperatorType.Multiplication ? "vertical-form__auxiliary-digit_hidden" : "")">
+                                @digit
+                            </div>
                         }
                     </div>
                     <div class="vertical-form__number">
@@ -72,6 +74,21 @@
                         {
                             <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
                         }
+                    </div>
+                    @if (Model.Operation.SubtotalsDigits.Count > 0)
+                    {
+                        <div class="vertical-form__line"></div>
+                    }
+                    <div>
+                    @foreach (var subtotal in Model.Operation.SubtotalsDigits)
+                    {
+                        <div class="vertical-form__number">
+                            @foreach (var digit in subtotal)
+                            {
+                                <div class="vertical-form__digit @(@digit == @VerticalFormArithmeticOperation.EMPTY_CELL ? "vertical-form__digit_hidden" : "")">@digit</div>
+                            }
+                        </div>
+                    }
                     </div>
                     <div class="vertical-form__line"></div>
                 </div>
