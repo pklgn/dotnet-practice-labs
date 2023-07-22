@@ -144,3 +144,14 @@
     outline: none;
 }
 
+.swagger__request-parameter {
+    width: 100%;
+    min-width: 100px;
+    max-width: 340px;
+    padding: 8px 10px;
+    margin: 5px 0;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
+

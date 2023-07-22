@@ -86,6 +86,23 @@ const pasteResponse = (elementId, response) => {
     document.getElementById(elementId).innerHTML = JSON.stringify(response, null, 4);
 };
 
+const getData = async (url = "") => {
+    const response = await fetch(url);
+
+    let result = {};
+    if (response.ok) {
+        result = await response.json();
+    } else {
+        result = {
+            status: response.status,
+            statusText: response.statusText,
+            url: response.url,
+        };
+    }
+
+    return result;
+};
+
 const postData = async (url = "", data = {}) => {
     const response = await fetch(url, {
         body: JSON.stringify(data),
@@ -109,10 +126,6 @@ const postData = async (url = "", data = {}) => {
     return result;
 };
 
-const insertAddUserResponse = response => {
-    document.getElementById("operations-response-addUser").innerHTML = response;
-};
-
 document.getElementById("operations-sendRequest-getUsers").addEventListener(
     "click",
     () => {
@@ -129,6 +142,15 @@ document.getElementById("operations-sendRequest-addUser").addEventListener(
         postData("/api/users", JSON.parse(userData)).then(response =>
             pasteResponse("operations-response-addUser", response),
         );
+    },
+    false,
+);
+
+document.getElementById("operations-sendRequest-getUser").addEventListener(
+    "click",
+    () => {
+        const userId = document.getElementById("operations-request-getUser").getElementsByTagName("input")[0].value;
+        getData(`/api/users/${userId}`).then(response => pasteResponse("operations-response-getUser", response));
     },
     false,
 );

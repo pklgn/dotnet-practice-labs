@@ -36,7 +36,7 @@
                     </div>
                     <div class="swagger__request hidden" id="operations-request-addUser">
                         <textarea
-                            title="request"
+                            title="Json data for the new user"
                             placeholder="Place your json request body here"
                             rows="10"
                             cols="50"
@@ -45,9 +45,7 @@
                         <div class="execute-wrapper">
                             <button class="btn swagger-ui" id="operations-sendRequest-addUser">Execute</button>
                         </div>
-                        <pre class="swagger__response hidden" id="operations-response-addUser">
-                          <code></code>
-                        </pre>
+                        <pre class="swagger__response hidden" id="operations-response-addUser"></pre>
                     </div>
                 </div>
                 <div class="swagger-ui swagger__item swagger__item_get">
@@ -58,9 +56,15 @@
                         <span class="material-symbols-outlined">expand_more</span>
                     </div>
                     <div class="swagger__request hidden" id="operations-request-getUser">
+                        <input
+                            class="swagger__request-parameter"
+                            title="User id for the desired user"
+                            placeholder="Enter id for the desired user"
+                        />
                         <div class="execute-wrapper">
-                            <button class="btn swagger-ui">Execute</button>
+                            <button class="btn swagger-ui" id="operations-sendRequest-getUser">Execute</button>
                         </div>
+                        <pre class="swagger__response hidden" id="operations-response-getUser"></pre>
                     </div>
                 </div>
                 <div class="swagger-ui swagger__item swagger__item_put">
