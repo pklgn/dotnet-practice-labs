@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite App</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="swagger">
+                <div class="swagger-ui swagger__item swagger__item_get">
+                    <div class="swagger__item-list" id="operations-getUsers">
+                        <div class="swagger__http-method">GET</div>
+                        <div class="swagger__route">/users</div>
+                        <div class="swagger__route-description">Getting the list of users</div>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                    <div class="swagger__request hidden" id="operations-request-getUsers">
+                        <div class="execute-wrapper">
+                            <button class="btn swagger-ui" id="operations-sendRequest-getUsers">Execute</button>
+                        </div>
+                        <pre class="swagger__response hidden" id="operations-response-getUsers"></pre>
+                    </div>
+                </div>
+                <div class="swagger-ui swagger__item swagger__item_post">
+                    <div class="swagger__item-list" id="operations-addUser">
+                        <div class="swagger__http-method">POST</div>
+                        <div class="swagger__route">/users</div>
+                        <div class="swagger__route-description">Adding a user</div>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                    <div class="swagger__request hidden" id="operations-request-addUser">
+                        <textarea
+                            title="request"
+                            placeholder="Place your json request body here"
+                            rows="10"
+                            cols="50"
+                            class="swagger__request-body"
+                        ></textarea>
+                        <div class="execute-wrapper">
+                            <button class="btn swagger-ui" id="operations-sendRequest-addUser">Execute</button>
+                        </div>
+                        <pre class="swagger__response hidden" id="operations-response-addUser">
+                          <code></code>
+                        </pre>
+                    </div>
+                </div>
+                <div class="swagger-ui swagger__item swagger__item_get">
+                    <div class="swagger__item-list" id="operations-getUser">
+                        <div class="swagger__http-method">GET</div>
+                        <div class="swagger__route">/users/{id}</div>
+                        <div class="swagger__route-description">Getting a specific user</div>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                    <div class="swagger__request hidden" id="operations-request-getUser">
+                        <div class="execute-wrapper">
+                            <button class="btn swagger-ui">Execute</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="swagger-ui swagger__item swagger__item_put">
+                    <div class="swagger__item-list" id="operations-updateUser">
+                        <div class="swagger__http-method">PUT</div>
+                        <div class="swagger__route">/users/{id}</div>
+                        <div class="swagger__route-description">Updating user data</div>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                    <div class="swagger__request hidden" id="operations-request-updateUser">
+                        <div class="execute-wrapper">
+                            <button class="btn swagger-ui">Execute</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="swagger-ui swagger__item swagger__item_delete">
+                    <div class="swagger__item-list" id="operations-deleteUser">
+                        <div class="swagger__http-method">DELETE</div>
+                        <div class="swagger__route">/users/{id}</div>
+                        <div class="swagger__route-description">Deleting a user</div>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                    <div class="swagger__request hidden" id="operations-request-deleteUser">
+                        <div class="execute-wrapper">
+                            <button class="btn swagger-ui">Execute</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="module" src="/main.js"></script>
+    </body>
+</html>
+
