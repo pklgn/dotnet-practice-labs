@@ -1,23 +1,15 @@
+import { FIRST_ELEMENT, JSON_INDENTATION } from "./config.js";
+import { deleteData, getData, postData } from "./fetch.js";
 import "./style.css";
-
-(async () => {
-    const response = await fetch("/api/users");
-
-    if (response.ok) {
-        const json = await response.json();
-        // eslint-disable-next-line no-console
-        console.log("json = ", json);
-    } else {
-        // eslint-disable-next-line no-console
-        console.log(`HTTP error: ${response.status}`);
-    }
-})();
 
 document.getElementById("operations-getUsers").addEventListener(
     "click",
     () => {
         document.getElementById("operations-request-getUsers").classList.toggle("hidden");
-        document.getElementById("operations-getUsers").getElementsByTagName("span")[0].classList.toggle("hidden");
+        document
+            .getElementById("operations-getUsers")
+            .getElementsByTagName("span")
+            [FIRST_ELEMENT].classList.toggle("hidden");
     },
     false,
 );
@@ -26,7 +18,10 @@ document.getElementById("operations-addUser").addEventListener(
     "click",
     () => {
         document.getElementById("operations-request-addUser").classList.toggle("hidden");
-        document.getElementById("operations-addUser").getElementsByTagName("span")[0].classList.toggle("hidden");
+        document
+            .getElementById("operations-addUser")
+            .getElementsByTagName("span")
+            [FIRST_ELEMENT].classList.toggle("hidden");
     },
     false,
 );
@@ -35,7 +30,10 @@ document.getElementById("operations-getUser").addEventListener(
     "click",
     () => {
         document.getElementById("operations-request-getUser").classList.toggle("hidden");
-        document.getElementById("operations-getUser").getElementsByTagName("span")[0].classList.toggle("hidden");
+        document
+            .getElementById("operations-getUser")
+            .getElementsByTagName("span")
+            [FIRST_ELEMENT].classList.toggle("hidden");
     },
     false,
 );
@@ -44,7 +42,10 @@ document.getElementById("operations-updateUser").addEventListener(
     "click",
     () => {
         document.getElementById("operations-request-updateUser").classList.toggle("hidden");
-        document.getElementById("operations-updateUser").getElementsByTagName("span")[0].classList.toggle("hidden");
+        document
+            .getElementById("operations-updateUser")
+            .getElementsByTagName("span")
+            [FIRST_ELEMENT].classList.toggle("hidden");
     },
     false,
 );
@@ -53,29 +54,13 @@ document.getElementById("operations-deleteUser").addEventListener(
     "click",
     () => {
         document.getElementById("operations-request-deleteUser").classList.toggle("hidden");
-        document.getElementById("operations-deleteUser").getElementsByTagName("span")[0].classList.toggle("hidden");
+        document
+            .getElementById("operations-deleteUser")
+            .getElementsByTagName("span")
+            [FIRST_ELEMENT].classList.toggle("hidden");
     },
     false,
 );
-
-const fetchUsers = async () => {
-    try {
-        const response = await fetch("/api/users");
-
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        // eslint-disable-next-line no-console
-        console.log("json = ", data);
-        return data;
-    } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error("Error fetching data:", error);
-        return null;
-    }
-};
 
 const pasteResponse = (elementId, response) => {
     const responseClassList = document.getElementById(elementId).classList;
@@ -83,72 +68,13 @@ const pasteResponse = (elementId, response) => {
         responseClassList.toggle("hidden");
     }
 
-    document.getElementById(elementId).innerHTML = JSON.stringify(response, null, 4);
-};
-
-const getData = async (url = "") => {
-    const response = await fetch(url);
-
-    let result = {};
-    if (response.ok) {
-        result = await response.json();
-    } else {
-        result = {
-            status: response.status,
-            statusText: response.statusText,
-            url: response.url,
-        };
-    }
-
-    return result;
-};
-
-const postData = async (url = "", data = {}, method = "POST") => {
-    const response = await fetch(url, {
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json",
-        },
-        method,
-    });
-
-    let result = {};
-    if (response.ok) {
-        result = await response.json();
-    } else {
-        result = {
-            status: response.status,
-            statusText: response.statusText,
-            url: response.url,
-        };
-    }
-
-    return result;
-};
-
-const deleteData = async (url = "") => {
-    const response = await fetch(url, {
-        method: "DELETE",
-    });
-
-    let result = {};
-    if (response.ok) {
-        result = await response.json();
-    } else {
-        result = {
-            status: response.status,
-            statusText: response.statusText,
-            url: response.url,
-        };
-    }
-
-    return result;
+    document.getElementById(elementId).innerHTML = JSON.stringify(response, null, JSON_INDENTATION);
 };
 
 document.getElementById("operations-sendRequest-getUsers").addEventListener(
     "click",
     () => {
-        fetchUsers().then(users => pasteResponse("operations-response-getUsers", users));
+        getData("/api/users").then(users => pasteResponse("operations-response-getUsers", users));
     },
     false,
 );
@@ -156,9 +82,9 @@ document.getElementById("operations-sendRequest-getUsers").addEventListener(
 document.getElementById("operations-sendRequest-addUser").addEventListener(
     "click",
     () => {
-        const userData = document
-            .getElementById("operations-request-addUser")
-            .getElementsByTagName("textarea")[0].value;
+        const userData = document.getElementById("operations-request-addUser").getElementsByTagName("textarea")[
+            FIRST_ELEMENT
+        ].value;
         postData("/api/users", JSON.parse(userData)).then(response =>
             pasteResponse("operations-response-addUser", response),
         );
@@ -169,7 +95,9 @@ document.getElementById("operations-sendRequest-addUser").addEventListener(
 document.getElementById("operations-sendRequest-getUser").addEventListener(
     "click",
     () => {
-        const userId = document.getElementById("operations-request-getUser").getElementsByTagName("input")[0].value;
+        const userId = document.getElementById("operations-request-getUser").getElementsByTagName("input")[
+            FIRST_ELEMENT
+        ].value;
         getData(`/api/users/${userId}`).then(response => pasteResponse("operations-response-getUser", response));
     },
     false,
@@ -178,10 +106,12 @@ document.getElementById("operations-sendRequest-getUser").addEventListener(
 document.getElementById("operations-sendRequest-updateUser").addEventListener(
     "click",
     () => {
-        const userId = document.getElementById("operations-request-updateUser").getElementsByTagName("input")[0].value;
-        const userData = document
-            .getElementById("operations-request-updateUser")
-            .getElementsByTagName("textarea")[0].value;
+        const userId = document.getElementById("operations-request-updateUser").getElementsByTagName("input")[
+            FIRST_ELEMENT
+        ].value;
+        const userData = document.getElementById("operations-request-updateUser").getElementsByTagName("textarea")[
+            FIRST_ELEMENT
+        ].value;
         postData(`/api/users/${userId}`, JSON.parse(userData), "PUT").then(response =>
             pasteResponse("operations-response-updateUser", response),
         );
@@ -192,7 +122,9 @@ document.getElementById("operations-sendRequest-updateUser").addEventListener(
 document.getElementById("operations-sendRequest-deleteUser").addEventListener(
     "click",
     () => {
-        const userId = document.getElementById("operations-request-deleteUser").getElementsByTagName("input")[0].value;
+        const userId = document.getElementById("operations-request-deleteUser").getElementsByTagName("input")[
+            FIRST_ELEMENT
+        ].value;
         deleteData(`/api/users/${userId}`).then(response => pasteResponse("operations-response-deleteUser", response));
     },
     false,
