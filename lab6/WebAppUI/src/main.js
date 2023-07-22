@@ -89,11 +89,8 @@ const pasteResponse = (elementId, response) => {
 const postData = async (url = "", data = {}) => {
     const response = await fetch(url, {
         body: JSON.stringify(data),
-        cache: "no-cache",
-        credentials: "same-origin",
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         method: "POST",
     });
@@ -119,8 +116,7 @@ const insertAddUserResponse = response => {
 document.getElementById("operations-sendRequest-getUsers").addEventListener(
     "click",
     () => {
-        const users = fetchUsers();
-        pasteResponse("operations-response-getUsers", users);
+        fetchUsers().then(users => pasteResponse("operations-response-getUsers", users));
     },
     false,
 );
@@ -129,8 +125,10 @@ document.getElementById("operations-sendRequest-addUser").addEventListener(
     () => {
         const userData = document
             .getElementById("operations-request-addUser")
-            .getElementsByTagName("textarea")[0].innerHTML;
-        postData("/api/users", userData).then(response => pasteResponse("operations-response-addUser", response));
+            .getElementsByTagName("textarea")[0].value;
+        postData("/api/users", JSON.parse(userData)).then(response =>
+            pasteResponse("operations-response-addUser", response),
+        );
     },
     false,
 );

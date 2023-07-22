@@ -8,7 +8,8 @@ export default defineConfig({
     proxy: {
       "/api": {
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/u, ""),
+        rewrite: (path) => path.replace(/^\/api/u, ""),
+        ws: true,
         target: "http://localhost:5140",
       },
     },
