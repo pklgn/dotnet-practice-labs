@@ -103,13 +103,32 @@ const getData = async (url = "") => {
     return result;
 };
 
-const postData = async (url = "", data = {}) => {
+const postData = async (url = "", data = {}, method = "POST") => {
     const response = await fetch(url, {
         body: JSON.stringify(data),
         headers: {
             "Content-Type": "application/json",
         },
-        method: "POST",
+        method,
+    });
+
+    let result = {};
+    if (response.ok) {
+        result = await response.json();
+    } else {
+        result = {
+            status: response.status,
+            statusText: response.statusText,
+            url: response.url,
+        };
+    }
+
+    return result;
+};
+
+const deleteData = async (url = "") => {
+    const response = await fetch(url, {
+        method: "DELETE",
     });
 
     let result = {};
@@ -133,6 +152,7 @@ document.getElementById("operations-sendRequest-getUsers").addEventListener(
     },
     false,
 );
+
 document.getElementById("operations-sendRequest-addUser").addEventListener(
     "click",
     () => {
@@ -151,6 +171,29 @@ document.getElementById("operations-sendRequest-getUser").addEventListener(
     () => {
         const userId = document.getElementById("operations-request-getUser").getElementsByTagName("input")[0].value;
         getData(`/api/users/${userId}`).then(response => pasteResponse("operations-response-getUser", response));
+    },
+    false,
+);
+
+document.getElementById("operations-sendRequest-updateUser").addEventListener(
+    "click",
+    () => {
+        const userId = document.getElementById("operations-request-updateUser").getElementsByTagName("input")[0].value;
+        const userData = document
+            .getElementById("operations-request-updateUser")
+            .getElementsByTagName("textarea")[0].value;
+        postData(`/api/users/${userId}`, JSON.parse(userData), "PUT").then(response =>
+            pasteResponse("operations-response-updateUser", response),
+        );
+    },
+    false,
+);
+
+document.getElementById("operations-sendRequest-deleteUser").addEventListener(
+    "click",
+    () => {
+        const userId = document.getElementById("operations-request-deleteUser").getElementsByTagName("input")[0].value;
+        deleteData(`/api/users/${userId}`).then(response => pasteResponse("operations-response-deleteUser", response));
     },
     false,
 );

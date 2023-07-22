@@ -75,9 +75,22 @@
                         <span class="material-symbols-outlined">expand_more</span>
                     </div>
                     <div class="swagger__request hidden" id="operations-request-updateUser">
+                        <input
+                            class="swagger__request-parameter"
+                            title="User id for the desired user"
+                            placeholder="Enter id for the desired user"
+                        />
+                        <textarea
+                            title="Json data for the updated user"
+                            placeholder="Place your json request body here"
+                            rows="10"
+                            cols="50"
+                            class="swagger__request-body"
+                        ></textarea>
                         <div class="execute-wrapper">
-                            <button class="btn swagger-ui">Execute</button>
+                            <button class="btn swagger-ui" id="operations-sendRequest-updateUser">Execute</button>
                         </div>
+                        <pre class="swagger__response hidden" id="operations-response-updateUser"></pre>
                     </div>
                 </div>
                 <div class="swagger-ui swagger__item swagger__item_delete">
@@ -88,9 +101,15 @@
                         <span class="material-symbols-outlined">expand_more</span>
                     </div>
                     <div class="swagger__request hidden" id="operations-request-deleteUser">
+                        <input
+                            class="swagger__request-parameter"
+                            title="User id for the desired user"
+                            placeholder="Enter id for the desired user"
+                        />
                         <div class="execute-wrapper">
-                            <button class="btn swagger-ui">Execute</button>
+                            <button class="btn swagger-ui" id="operations-sendRequest-deleteUser">Execute</button>
                         </div>
+                        <pre class="swagger__response hidden" id="operations-response-deleteUser"></pre>
                     </div>
                 </div>
             </div>
