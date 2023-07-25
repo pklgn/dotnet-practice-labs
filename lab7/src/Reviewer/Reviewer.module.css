@@ -1,0 +1,39 @@
+.wrapper {
+  display: inline-block;
+}
+
+.reviewer {
+  display: inline-flex;
+  flex-direction: column;
+  margin-bottom: 88px;
+}
+
+.title {
+  display: inline;
+  margin-bottom: 44px;
+  font-family: Inter;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: #404040;
+  letter-spacing: 0.39px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.textarea {
+  margin-bottom: 27px;
+}
+
+.rating {
+  margin-bottom: 19px;
+}
+
+.btn {
+  align-self: flex-end;
+}

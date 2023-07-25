@@ -1,0 +1,9 @@
+.rating {
+  display: inline-flex;
+  place-content: center;
+  font-size: 44px;
+}
+
+.grade {
+  padding-right: 12px;
+}

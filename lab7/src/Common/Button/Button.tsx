@@ -1,11 +1,17 @@
+import styles from "./Button.module.css";
+
 type ButtonProps = {
-    text: string
-}
+    text: string;
+    // TODO: fix any type
+    style?: any;
+};
 
 function Button(props: ButtonProps) {
     return (
-        <button>{props.text}</button>
-    )
+        <button className={`${styles.btn} ${props.style ?? ""}`}>
+            {props.text}
+        </button>
+    );
 }
 
 export default Button;
