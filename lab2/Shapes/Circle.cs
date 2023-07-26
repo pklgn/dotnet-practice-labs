@@ -5,8 +5,8 @@ namespace Shapes;
 
 public class Circle : IShape
 {
-    Point _center;
-    double _radius;
+    private Point _center;
+    private double _radius;
 
     public Circle(Point center, double radius)
     {

@@ -5,8 +5,8 @@ namespace Shapes;
 
 public class Square : IShape
 {
-    Point _leftTop;
-    double _side;
+    private Point _leftTop;
+    private double _side;
 
     public Square(Point leftTop, double side)
     {

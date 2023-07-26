@@ -5,9 +5,9 @@ namespace Shapes;
 
 public class Triangle : IShape
 {
-    Point _vertex1;
-    Point _vertex2;
-    Point _vertex3;
+    private Point _vertex1;
+    private Point _vertex2;
+    private Point _vertex3;
 
     public Triangle(Point vertex1, Point vertex2, Point vertex3)
     {

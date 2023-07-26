@@ -5,8 +5,8 @@ namespace Shapes;
 
 public class Point
 {
-    double _x;
-    double _y;
+    private double _x;
+    private double _y;
 
     public Point(double x, double y)
     {
