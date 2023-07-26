@@ -27,6 +27,8 @@
 }
 
 .text {
+  width: 460px;
+  margin: 0 auto;
   font-family: Inter;
   font-size: 14px;
   font-style: normal;
@@ -35,6 +37,8 @@
   color: #404040;
   text-align: start;
   letter-spacing: 0.21px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .grade {

@@ -1,5 +1,5 @@
 import "./App.css";
-import Reviewer, { Review } from "./Reviewer/Reviewer";
+import Reviewer from "./components/Reviewer/Reviewer";
 
 function App() {
     return (

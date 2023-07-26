@@ -1,5 +1,4 @@
-import { MouseEvent, useEffect, useState } from "react";
-import Star from "../Star/Star";
+import Star from "../../Common/Star/Star";
 import styles from "./StarGrade.module.css";
 
 type StarGradeProps = {

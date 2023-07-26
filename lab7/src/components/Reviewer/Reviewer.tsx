@@ -1,23 +1,24 @@
 import { useState } from "react";
-import Button from "../Common/Button/Button";
 import Textarea from "../Common/Textarea/Textarea";
-import Rating from "./Rating/Rating";
-import Review from "./Review/Review";
+import Rating from "../Reviewer/Rating/Rating";
+import Review from "../Reviewer/Review/Review";
 import styles from "./Reviewer.module.css";
-import { GradeProps } from "./Grade/Grade";
+import { GradeProps } from "../Reviewer/Grade/Grade";
+import Button from "../Common/Button/Button";
 
-export type Review = {
+type Review = {
     author: string;
     text: string;
     grade: GradeProps;
 };
 
-const MAX_RATING: number = 5;
 function Reviewer() {
-    const [rating, setRating] = useState(0);
-    const [text, setText] = useState("");
-    const [submitted, setSubmitted] = useState(false);
+    const MAX_RATING: number = 5;
+
+    const [rating, setRating] = useState<number>(0);
+    const [text, setText] = useState<string>("");
     const [reviews, setReviews] = useState<Review[]>([]);
+
     const handleOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(event.target.value);
     };
@@ -33,8 +34,9 @@ function Reviewer() {
                 maxGrade: MAX_RATING,
             },
         };
+        setText(() => "");
+        setRating(() => 0);
         setReviews(() => [review]);
-        setSubmitted(true);
     };
 
     // TODO: add l10n
@@ -62,7 +64,7 @@ function Reviewer() {
                     />
                 </form>
             </div>
-            {submitted &&
+            {reviews.length != 0 &&
                 reviews.map((review, index) => (
                     <div key={index}>
                         <Review

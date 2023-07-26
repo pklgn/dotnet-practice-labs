@@ -1,5 +1,4 @@
 import Grade from "../Grade/Grade";
-import { useState } from "react";
 import StarGrade from "../StarGrade/StarGrade";
 import styles from "./Rating.module.css";
 
