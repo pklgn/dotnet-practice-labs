@@ -34,7 +34,7 @@ namespace WebAppApi.Services
 
         public User GetById(int id)
         {
-            return getUser(id);
+            return GetUser(id);
         }
 
         public void Create(CreateRequest model)
@@ -56,7 +56,7 @@ namespace WebAppApi.Services
 
         public void Update(int id, UpdateRequest model)
         {
-            var user = getUser(id);
+            var user = GetUser(id);
 
             // validate
             if (model.Email != user.Email && _context.Users.Any(x => x.Email == model.Email))
@@ -74,14 +74,14 @@ namespace WebAppApi.Services
 
         public void Delete(int id)
         {
-            var user = getUser(id);
+            var user = GetUser(id);
             _context.Users.Remove(user);
             _context.SaveChanges();
         }
 
         // helper methods
 
-        private User getUser(int id)
+        private User GetUser(int id)
         {
             var user = _context.Users.Find(id);
             if (user == null) throw new KeyNotFoundException("User not found");
