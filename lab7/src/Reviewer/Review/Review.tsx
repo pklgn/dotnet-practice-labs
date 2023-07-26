@@ -2,7 +2,7 @@ import AuthorThumbnail from "../../Common/Thumbnail/AuthorThumbnail/AuthorThumbn
 import Grade, { GradeProps } from "../Grade/Grade";
 import styles from "./Review.module.css";
 
-type ReviewProps = {
+export type ReviewProps = {
     author: string;
     text: string;
     grade: GradeProps;
@@ -20,8 +20,8 @@ function Review(props: ReviewProps) {
             </div>
             <div className={styles.grade}>
                 <Grade
-                    value={props.grade.value}
-                    maxValue={props.grade.maxValue}
+                    grade={props.grade.grade}
+                    maxGrade={props.grade.maxGrade}
                 />
             </div>
         </div>

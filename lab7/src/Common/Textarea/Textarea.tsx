@@ -1,7 +1,9 @@
 import styles from "./Textarea.module.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type TextareaProps = {
+    value?: string;
+    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
     // TODO: fix any type
     style?: any;
 };
@@ -9,9 +11,9 @@ type TextareaProps = {
 function Textarea(props: TextareaProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    useEffect(() => handleInput(), []);
+    useLayoutEffect(() => handleOnInput(), []);
 
-    const handleInput = () => {
+    const handleOnInput = () => {
         const textarea = textareaRef.current;
         if (textarea) {
             textarea.style.height = "auto";
@@ -24,7 +26,9 @@ function Textarea(props: TextareaProps) {
             ref={textareaRef}
             className={`${styles.textarea} ${props.style ?? ""}`}
             placeholder="What could we improve"
-            onInput={handleInput}
+            onInput={handleOnInput}
+            onChange={props.onChange}
+            value={props.value}
         />
     );
 }
