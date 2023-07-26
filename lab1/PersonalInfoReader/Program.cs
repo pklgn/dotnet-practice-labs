@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-void RunPersonDialog(TextReader input, TextWriter output, out Person person)
+Person RunPersonDialog(TextReader input, TextWriter output)
 {
     void ReadLine(out string data)
     {
@@ -27,10 +27,10 @@ void RunPersonDialog(TextReader input, TextWriter output, out Person person)
     output.Write("Github: ");
     ReadLine(out string github);
 
-    person = new Person(name, age, email, github);
+    return new Person(name, age, email, github);
 }
 
-RunPersonDialog(Console.In, Console.Out, out Person person);
+Person person = RunPersonDialog(Console.In, Console.Out);
 Console.WriteLine(person.GetFormattedInfo());
 
 class Person
