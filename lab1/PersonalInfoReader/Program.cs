@@ -37,10 +37,10 @@ Console.WriteLine(person.GetFormattedInfo());
 
 internal class Person
 {
-    string _name;
-    int _age;
-    string _email;
-    string _github;
+    private string _name;
+    private int _age;
+    private string _email;
+    private string _github;
 
     public Person(string name, int age, string email, string github)
     {
