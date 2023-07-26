@@ -33,7 +33,7 @@ Person RunPersonDialog(TextReader input, TextWriter output)
 Person person = RunPersonDialog(Console.In, Console.Out);
 Console.WriteLine(person.GetFormattedInfo());
 
-class Person
+internal class Person
 {
     string _name;
     int _age;

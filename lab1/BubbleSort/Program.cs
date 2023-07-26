@@ -1,9 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-class Program
+public class Program
 {
-    static void Main()
+    private static void Main()
     {
         Console.WriteLine("Test case 1");
         List<int> input = new() { 30, 1, 3, -4 };
@@ -16,7 +16,7 @@ class Program
         stringInput.ForEach(item => Console.WriteLine(item));
     }
 
-    static void BubbleSort<T>(IList<T> list, IComparer<T> comparer)
+    private static void BubbleSort<T>(IList<T> list, IComparer<T> comparer)
     {
         bool isSorted = true;
 
@@ -39,7 +39,7 @@ class Program
         }
     }
 
-    static void BubbleSort<T>(IList<T> list)
+    private static void BubbleSort<T>(IList<T> list)
     {
         BubbleSort<T>(list, Comparer<T>.Default);
     }
