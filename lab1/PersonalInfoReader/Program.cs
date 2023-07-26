@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Text;
+
 Person RunPersonDialog(TextReader input, TextWriter output)
 {
     void ReadLine(out string data)
@@ -50,12 +52,14 @@ internal class Person
 
     public string GetFormattedInfo()
     {
-        return
-$@"[name]: {_name}
-[age]:  {_age}
-[contact info]:
-    [email]:  {_email}
-    [github]: {_github}";
+        StringBuilder sb = new StringBuilder();
+        sb.AppendFormat("[name]: {0}\n", _name);
+        sb.AppendFormat("[age]:  {0}\n", _age);
+        sb.AppendLine("[contact info]:");
+        sb.AppendFormat("    [email]:  {0}\n", _email);
+        sb.AppendFormat("    [github]: {0}\n", _github);
+
+        return sb.ToString();
     }
 }
 
