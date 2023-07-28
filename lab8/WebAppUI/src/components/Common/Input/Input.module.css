@@ -1,0 +1,14 @@
+.input {
+    box-sizing: border-box;
+    width: 100px;
+    height: 40px;
+    padding: 1px 6px 1px 12px;
+    margin: 0;
+    overflow: hidden;
+    font-family: arial,sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #bdc1c6;
+    text-align: left;
+    border: 1px solid black;
+}

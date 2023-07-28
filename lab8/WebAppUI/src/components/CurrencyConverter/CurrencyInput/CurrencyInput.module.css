@@ -1,0 +1,19 @@
+.inputWrapper {
+  display: flex;
+}
+
+.selectWrapper {
+  position: relative;
+  display: inline-block;
+  height: 40px;
+  overflow: hidden;
+  background-color: #202124;
+}
+
+.selectDivider {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  z-index: 3;
+  border-left: 1px solid #3c4043;
+}

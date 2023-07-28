@@ -1,0 +1,17 @@
+.textarea {
+  min-width: 383px;
+  min-height: 113px;
+  padding-top: 11px;
+  padding-left: 11px;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #909090;
+  letter-spacing: 0.21px;
+  resize: none;
+  background: #FFF;
+  border: 1px solid #DCDCDC;
+  border-radius: 5px;
+}
