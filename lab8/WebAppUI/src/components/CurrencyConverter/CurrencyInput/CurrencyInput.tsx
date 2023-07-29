@@ -10,12 +10,12 @@ export type CurrencyInputProps = {
     onChange?: ChangeEventHandler<HTMLInputElement>;
     value?: string;
     defaultValue?: string;
-    style?: any;
+    className?: any;
 };
 function CurrencyInput(props: CurrencyInputProps) {
-    const { type, currencies, onChange, value, style } = props;
+    const { type, currencies, onChange, value, className } = props;
     return (
-        <div className={`${styles.inputWrapper} ${style ?? ""}`}>
+        <div className={`${styles.inputWrapper} ${className ?? ""}`}>
             <Input type={type} value={value} onChange={onChange} />
             <div className={styles.selectWrapper}>
                 <div className={styles.selectDivider}></div>

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export type CurrencyTableRow = {
     source: string;
     target: string;
@@ -5,13 +7,33 @@ export type CurrencyTableRow = {
     dateTime: Date;
 };
 
-export type CurrencyTableProps = {
-    rows: CurrencyTableRow[];
+type CurrencyTableFilter = {
+    paymentCurrency: string;
+    purchasedCurrency: string;
+    fromDateTime: Date;
+    toDateTime?: Date;
 };
 
-function CurrencyTable(props: CurrencyTableProps) {
-    const { rows } = props;
+type CurrencyTableProps = CurrencyTableFilter;
 
+function CurrencyTable(props: CurrencyTableProps) {
+    const { paymentCurrency, purchasedCurrency, fromDateTime, toDateTime } = props;
+    const [rows, setRows] = useState<CurrencyTableRow[]>([]);
+
+    useEffect(() => {
+        console.log(fromDateTime.toISOString());
+        const fetchCurrencyData = async () => {
+            const response = await fetch(
+                `/api/prices?PaymentCurrency=${paymentCurrency}&PurchasedCurrency=${purchasedCurrency}&FromDateTime=${fromDateTime.toISOString()}&ToDateTime=${toDateTime?.toISOString()}`,
+            );
+            const data: CurrencyTableRow[] = await response.json();
+            setRows(data);
+        };
+
+        fetchCurrencyData().catch(console.log);
+    }, [paymentCurrency, purchasedCurrency, fromDateTime, toDateTime]);
+
+    console.log();
     return (
         <div>
             {rows.length !== 0 &&
@@ -20,8 +42,8 @@ function CurrencyTable(props: CurrencyTableProps) {
                         <span>{row.source}</span>
                         <span>{row.target}</span>
                         <span>{row.price}</span>
-                        <span>{row.dateTime.toLocaleDateString()}</span>
-                        <span>{row.dateTime.toLocaleTimeString()}</span>
+                        <span>{new Date(row.dateTime).toLocaleDateString("en-US")}</span>
+                        <span>{new Date(row.dateTime).toLocaleTimeString("en-US")}</span>
                     </div>
                 ))}
         </div>

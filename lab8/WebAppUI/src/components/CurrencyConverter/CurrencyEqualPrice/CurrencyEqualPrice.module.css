@@ -1,0 +1,21 @@
+.source {
+  font-family: Roboto, HelveticaNeue, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.target {
+  margin-bottom: 0;
+  font-family: Open Sans, arial, sans-serif;
+}
+
+.date
+.time {
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #9aa0a6;
+}
+
+.date {
+  margin-right: 10px;
+}

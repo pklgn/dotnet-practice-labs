@@ -3,12 +3,12 @@ import styles from "./Select.module.css";
 export type SelectProps = {
     options: string[];
     title?: string;
-    style?: string;
+    className?: string;
 };
 function Select(props: SelectProps) {
-    const { options, title, style } = props;
+    const { options, title, className } = props;
     return (
-        <select className={`${styles.select} ${style ?? ""}`} title={title ?? ""}>
+        <select className={`${styles.select} ${className ?? ""}`} title={title ?? ""}>
             {options.length !== 0 && options.map((option, index) => <option key={index}>{option}</option>)}
         </select>
     );
