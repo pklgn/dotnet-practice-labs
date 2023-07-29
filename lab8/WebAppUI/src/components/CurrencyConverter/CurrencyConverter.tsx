@@ -1,7 +1,7 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import Button from "../Common/Button/Button";
 import styles from "./CurrencyConverter.module.css";
-import CurrencyEqualPrice from "./CurrencyEqualPrice/CurrencyEqualPrice";
+import CurrencyEqualPrice, { ConverterTemplate } from "./CurrencyEqualPrice/CurrencyEqualPrice";
 import CurrencyInput from "./CurrencyInput/CurrencyInput";
 import CurrencyTable from "./CurrencyTable/CurrencyTable";
 
@@ -12,18 +12,13 @@ export type Currency = {
     symbol: string;
 };
 
-export type ConverterTemplate = {
-    sourceCode: string;
-    targetCode: string;
-};
-
 function CurrencyConverter() {
     const [currentTemplate, setCurrentTemplate] = useState<number>(0);
     const [templates, setTemplates] = useState<ConverterTemplate[]>([{ sourceCode: "AUD", targetCode: "JPY" }]);
     const [currencies, setCurrencies] = useState<Currency[]>([]);
-    const [price, setPrice] = useState<number>(1.2);
+    const price = useRef<number>(1);
     const [source, setSource] = useState<number>(1);
-    const [target, setTarget] = useState<number>(price);
+    const [target, setTarget] = useState<number>(price.current);
     const [sourceName, setSourceName] = useState<string>("Australian dollar");
     const [targetName, setTargetName] = useState<string>("Japanese yen");
     // TODO: refactor this ASAP
@@ -46,12 +41,12 @@ function CurrencyConverter() {
     };
 
     useEffect(() => {
-        setTarget(source * price);
-    }, [source]);
+        setTarget(source * price.current);
+    }, [source, price]);
 
     useEffect(() => {
-        setSource(target / price);
-    }, [target]);
+        setSource(target / price.current);
+    }, [target, price]);
 
     useEffect(() => {
         const fetchCurrencies = async () => {
@@ -65,12 +60,22 @@ function CurrencyConverter() {
         fetchCurrencies().catch(console.error);
     }, []);
 
+    const handlePriceUpdate = (newPrice: number) => {
+        price.current = newPrice;
+    };
+
     // TODO: set max source input
     return (
         <div className={styles.converterWrapper}>
             <div className={styles.converter}>
                 <div className={styles.inputWrapper}>
-                    <CurrencyEqualPrice sourceName={sourceName} targetName={targetName} price={price} />
+                    <CurrencyEqualPrice
+                        sourceName={sourceName}
+                        targetName={targetName}
+                        template={templates[currentTemplate]}
+                        price={price.current}
+                        handlePriceUpdate={handlePriceUpdate}
+                    />
                     <CurrencyInput
                         currencies={currencies.map((currency: Currency) => currency.name)}
                         type={"number"}

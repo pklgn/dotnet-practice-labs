@@ -1,32 +1,40 @@
 import { useEffect } from "react";
+import { CurrencyTableRow } from "../CurrencyTable/CurrencyTable";
 import styles from "./CurrencyEqualPrice.module.css";
+
+export type ConverterTemplate = {
+    sourceCode: string;
+    targetCode: string;
+};
 
 type CurrencyEqualPriceProps = {
     sourceName: string;
     targetName: string;
+    template: ConverterTemplate;
     price: number;
+    handlePriceUpdate: (price: number) => void;
 };
 
 function CurrencyEqualPrice(props: CurrencyEqualPriceProps) {
+    const { sourceName, targetName, template, price, handlePriceUpdate } = props;
     const currentDate = new Date();
     useEffect(() => {
         const fetchLastTemplatePrice = async () => {
             const stepDate = new Date(currentDate.getTime() - 20 * 1000);
             const response = await fetch(
-                `/api/prices?PaymentCurrency=${templates[currentTemplate].sourceCode}&PurchasedCurrency=${
-                    templates[currentTemplate].targetCode
+                `/api/prices?PaymentCurrency=${template.sourceCode}&PurchasedCurrency=${
+                    template.targetCode
                 }&FromDateTime=${stepDate.toISOString()}&ToDateTime=${currentDate.toISOString()}`,
             );
             if (response.ok) {
                 const json: CurrencyTableRow[] = await response.json();
                 console.log(json);
-                setPrice(json.pop()?.price);
+                handlePriceUpdate([...json].pop()?.price ?? 1);
             }
         };
 
-        //fetchLastTemplatePrice().catch(console.error);
-    }, [currentTemplate]);
-    const { sourceName, targetName, price } = props;
+        fetchLastTemplatePrice().catch(console.error);
+    }, []);
     return (
         <>
             <div className={styles.source}>{`1 ${sourceName} equals`}</div>
