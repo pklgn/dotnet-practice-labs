@@ -1,12 +1,8 @@
 import "./App.css";
-import CurrencyConverter from "./components/CurrencyConverter/CurrencyConverter";
+import CurrencyConverterContext from "./components/CurrencyConverter/ConverterTemplatesContext/ConverterTemplatesContext";
 
 function App() {
-    return (
-        <>
-            <CurrencyConverter />
-        </>
-    );
+    return <CurrencyConverterContext />;
 }
 
 export default App;
