@@ -4,7 +4,7 @@ export type CurrencyTableRow = {
     source: string;
     target: string;
     price: number;
-    dateTime: Date;
+    dateTime: string;
 };
 
 type CurrencyTableFilter = {
