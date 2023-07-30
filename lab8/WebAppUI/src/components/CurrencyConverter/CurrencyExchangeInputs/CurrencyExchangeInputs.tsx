@@ -1,16 +1,22 @@
-import { ChangeEventHandler, useEffect, useLayoutEffect, useState } from "react";
-import { Currency } from "../CurrencyConverter";
+import { ChangeEventHandler, useContext, useEffect, useLayoutEffect, useState } from "react";
+import {
+    ConverterCurrenciesContext,
+    ConverterExchangeContext,
+} from "../ConverterTemplatesContext/ConverterTemplatesContext";
 import CurrencyInput from "../CurrencyInput/CurrencyInput";
+import { getCurrencyCodeByName, getCurrencyNameByCode } from "../utils/currencyConverter";
 
 type CurrencyExchangeInputsProps = {
-    currencies: Currency[];
     price: number;
 };
 
 const CURRENCY_INPUT_PRECISION = 3;
 
 function CurrencyExchangeInputs(props: CurrencyExchangeInputsProps) {
-    const { currencies, price } = props;
+    const { price } = props;
+
+    const { currencies, setCurrencies } = useContext(ConverterCurrenciesContext);
+    const { exchange, setExchange } = useContext(ConverterExchangeContext);
 
     const [source, setSource] = useState<number>(1);
     const [target, setTarget] = useState<number>(price);
@@ -18,7 +24,6 @@ function CurrencyExchangeInputs(props: CurrencyExchangeInputsProps) {
     const handleSourceOnChange: ChangeEventHandler<HTMLInputElement> = event => {
         if (event.currentTarget.value) {
             const value = Number(event.currentTarget.value);
-            console.log(value);
             setSource(() => value);
             setTarget(() => value * price);
         }
@@ -29,6 +34,23 @@ function CurrencyExchangeInputs(props: CurrencyExchangeInputsProps) {
             const value = Number(event.currentTarget.value);
             setSource(() => value / price);
             setTarget(() => value);
+        }
+    };
+    const handleSourceSelectOnChange: ChangeEventHandler<HTMLSelectElement> = event => {
+        if (event.target.value) {
+            setExchange(() => {
+                console.log(exchange);
+                return { ...exchange, sourceCode: getCurrencyCodeByName(event.target.value, currencies) };
+            });
+        }
+    };
+
+    const handleTargetSelectOnChange: ChangeEventHandler<HTMLSelectElement> = event => {
+        if (event.target.value) {
+            setExchange(() => {
+                console.log(exchange);
+                return { ...exchange, targetCode: getCurrencyCodeByName(event.target.value, currencies) };
+            });
         }
     };
 
@@ -45,16 +67,18 @@ function CurrencyExchangeInputs(props: CurrencyExchangeInputsProps) {
     return (
         <>
             <CurrencyInput
-                currencies={currencies.map((currency: Currency) => currency.name)}
                 type={"number"}
                 value={`${source}`}
                 onChange={handleSourceOnChange}
+                onSelectChange={handleSourceSelectOnChange}
+                selectedCurrency={getCurrencyNameByCode(exchange.sourceCode, currencies)}
             />
             <CurrencyInput
-                currencies={currencies.map((currency: Currency) => currency.name)}
                 type={"number"}
                 value={`${target}`}
                 onChange={handleTargetOnChange}
+                onSelectChange={handleTargetSelectOnChange}
+                selectedCurrency={getCurrencyNameByCode(exchange.targetCode, currencies)}
             />
         </>
     );
