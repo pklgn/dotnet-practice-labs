@@ -1,11 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ConverterTemplate } from "../ConverterTemplatesContext/ConverterTemplatesContext";
 import { CurrencyTableRow } from "../CurrencyTable/CurrencyTable";
 import styles from "./CurrencyEqualPrice.module.css";
-
-export type ConverterTemplate = {
-    sourceCode: string;
-    targetCode: string;
-};
 
 type CurrencyEqualPriceProps = {
     sourceName: string;
@@ -16,32 +12,36 @@ type CurrencyEqualPriceProps = {
 };
 
 function CurrencyEqualPrice(props: CurrencyEqualPriceProps) {
+    const [currentDate, setCurrentDate] = useState<string>(new Date().toISOString());
     const { sourceName, targetName, template, price, handlePriceUpdate } = props;
-    const currentDate = new Date();
     useEffect(() => {
         const fetchLastTemplatePrice = async () => {
-            const stepDate = new Date(currentDate.getTime() - 20 * 1000);
+            const stepDate = new Date(new Date().getTime() - 20 * 1000);
             const response = await fetch(
                 `/api/prices?PaymentCurrency=${template.sourceCode}&PurchasedCurrency=${
                     template.targetCode
-                }&FromDateTime=${stepDate.toISOString()}&ToDateTime=${currentDate.toISOString()}`,
+                }&FromDateTime=${stepDate.toISOString()}&ToDateTime=${new Date().toISOString()}`,
             );
             if (response.ok) {
                 const json: CurrencyTableRow[] = await response.json();
-                console.log(json);
-                handlePriceUpdate([...json].pop()?.price ?? 1);
+                const lastTableRow = [...json].pop();
+                if (lastTableRow) {
+                    handlePriceUpdate(lastTableRow.price);
+                    setCurrentDate(lastTableRow.dateTime);
+                }
             }
         };
 
         fetchLastTemplatePrice().catch(console.error);
     }, []);
+
     return (
         <>
             <div className={styles.source}>{`1 ${sourceName} equals`}</div>
             <div className={styles.target}>{`${price} ${targetName}`}</div>
             <div className={styles.datetime}>
-                <div className={styles.date}>{new Date("2023-07-26T16:18:09Z").toLocaleDateString("ru-RU")}</div>
-                <div className={styles.time}>{new Date("2023-07-26T16:18:09Z").toLocaleTimeString("ru-RU")}</div>
+                <div className={styles.date}>{new Date(currentDate).toLocaleDateString()}</div>
+                <div className={styles.time}>{new Date(currentDate).toLocaleTimeString()}</div>
             </div>
         </>
     );
