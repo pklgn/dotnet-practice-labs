@@ -1,9 +1,15 @@
-import { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Button from "../Common/Button/Button";
+import {
+    ConverterCurrenciesContext,
+    ConverterCurrentTemplateIndexContext,
+    ConverterTemplatesContext,
+} from "./ConverterTemplatesContext/ConverterTemplatesContext";
 import styles from "./CurrencyConverter.module.css";
-import CurrencyEqualPrice, { ConverterTemplate } from "./CurrencyEqualPrice/CurrencyEqualPrice";
-import CurrencyInput from "./CurrencyInput/CurrencyInput";
+import CurrencyEqualPrice from "./CurrencyEqualPrice/CurrencyEqualPrice";
+import CurrencyExchangeInputs from "./CurrencyExchangeInputs/CurrencyExchangeInputs";
 import CurrencyTable from "./CurrencyTable/CurrencyTable";
+import { getCurrencyNameByCode } from "./utils/currencyConverter";
 
 export type Currency = {
     code: string;
@@ -13,40 +19,21 @@ export type Currency = {
 };
 
 function CurrencyConverter() {
-    const [currentTemplate, setCurrentTemplate] = useState<number>(0);
-    const [templates, setTemplates] = useState<ConverterTemplate[]>([{ sourceCode: "AUD", targetCode: "JPY" }]);
-    const [currencies, setCurrencies] = useState<Currency[]>([]);
+    const { currentTemplate, setCurrentTemplate } = useContext(ConverterCurrentTemplateIndexContext);
+    const { templates, setTemplates } = useContext(ConverterTemplatesContext);
+    const { currencies, setCurrencies } = useContext(ConverterCurrenciesContext);
     const price = useRef<number>(1);
-    const [source, setSource] = useState<number>(1);
-    const [target, setTarget] = useState<number>(price.current);
-    const [sourceName, setSourceName] = useState<string>("Australian dollar");
-    const [targetName, setTargetName] = useState<string>("Japanese yen");
+    const [sourceName, setSourceName] = useState<string>();
+    const [targetName, setTargetName] = useState<string>();
     // TODO: refactor this ASAP
     const currentDate = new Date();
     const [fromDatetime, setFromDateTime] = useState<Date>(new Date(currentDate.getTime() - 2 * 60 * 1000));
     const [toDatetime, setToDateTime] = useState<Date>(currentDate);
 
-    const handleSourceOnChange: ChangeEventHandler<HTMLInputElement> = event => {
-        if (event.currentTarget.value) {
-            const value = Number(event.currentTarget.value);
-            setSource(() => value);
-        }
-    };
-
-    const handleTargetOnChange: ChangeEventHandler<HTMLInputElement> = event => {
-        if (event.currentTarget.value) {
-            const value = Number(event.currentTarget.value);
-            setTarget(() => value);
-        }
-    };
-
     useEffect(() => {
-        setTarget(source * price.current);
-    }, [source, price]);
-
-    useEffect(() => {
-        setSource(target / price.current);
-    }, [target, price]);
+        setSourceName(getCurrencyNameByCode(templates[currentTemplate].sourceCode, currencies));
+        setTargetName(getCurrencyNameByCode(templates[currentTemplate].targetCode, currencies));
+    }, [currentTemplate, templates, currencies]);
 
     useEffect(() => {
         const fetchCurrencies = async () => {
@@ -69,27 +56,8 @@ function CurrencyConverter() {
         <div className={styles.converterWrapper}>
             <div className={styles.converter}>
                 <div className={styles.inputWrapper}>
-                    <CurrencyEqualPrice
-                        sourceName={sourceName}
-                        targetName={targetName}
-                        template={templates[currentTemplate]}
-                        price={price.current}
-                        handlePriceUpdate={handlePriceUpdate}
-                    />
-                    <CurrencyInput
-                        currencies={currencies.map((currency: Currency) => currency.name)}
-                        type={"number"}
-                        value={`${source}`}
-                        defaultValue={"1"}
-                        onChange={handleSourceOnChange}
-                    />
-                    <CurrencyInput
-                        currencies={currencies.map((currency: Currency) => currency.name)}
-                        type={"number"}
-                        value={`${target}`}
-                        defaultValue={`${price}`}
-                        onChange={handleTargetOnChange}
-                    />
+                    <CurrencyEqualPrice price={price.current} handlePriceUpdate={handlePriceUpdate} />
+                    <CurrencyExchangeInputs price={price.current} />
                 </div>
                 <div className={styles.tableWrapper}>
                     <Button text={"Save template"} type={"button"} />
