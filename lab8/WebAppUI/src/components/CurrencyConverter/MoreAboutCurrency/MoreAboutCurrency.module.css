@@ -1,0 +1,19 @@
+.aboutCurrency {
+  margin-bottom: 20px;
+  font-family: Roboto,Arial,sans-serif;
+  text-align: start;
+}
+
+.code {
+  font-weight: 500;
+}
+
+.name {
+  margin-bottom: 5px;
+  font-family: Open Sans, Roboto, Arial, sans-serif;
+  font-weight: 400;
+}
+
+.description {
+  color: #70757a;
+}
