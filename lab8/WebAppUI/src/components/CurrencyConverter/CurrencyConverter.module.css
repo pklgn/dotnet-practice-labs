@@ -1,12 +1,10 @@
 .converterWrapper {
-  max-width: 570px;
+  max-width: 768px;
 }
 
 .converter {
   display: flex;
   justify-content: space-between;
-  border: 1px solid black;
-  border-radius: 5px;
 }
 
 
@@ -17,8 +15,13 @@
 }
 
 .tableWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .datetime {
   display: flex;
 }
+

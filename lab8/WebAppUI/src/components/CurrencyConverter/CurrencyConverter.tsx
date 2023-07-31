@@ -1,39 +1,24 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import Button from "../Common/Button/Button";
+import { useContext, useEffect, useState } from "react";
+import { DEFAULT_DATE_TIME_RANGES_IN_MILLISECONDS } from "../../model/CurrencyConverter/ConverterConstants";
+import { Currency } from "../../model/CurrencyConverter/Currency";
 import {
     ConverterCurrenciesContext,
-    ConverterCurrentTemplateIndexContext,
-    ConverterTemplatesContext,
+    ConverterExchangeContext,
 } from "./ConverterTemplatesContext/ConverterTemplatesContext";
+import ConverterTemplatesDropdown from "./ConverterTemplatesDropdown/ConverterTemplatesDropdown";
 import styles from "./CurrencyConverter.module.css";
+import CurrencyDateTimeRange from "./CurrencyDateTimeRange/CurrencyDateTimeRange";
 import CurrencyEqualPrice from "./CurrencyEqualPrice/CurrencyEqualPrice";
 import CurrencyExchangeInputs from "./CurrencyExchangeInputs/CurrencyExchangeInputs";
 import CurrencyTable from "./CurrencyTable/CurrencyTable";
-import { getCurrencyNameByCode } from "./utils/currencyConverter";
+import MoreAboutCurrency from "./MoreAboutCurrency/MoreAboutCurrency";
 
-export type Currency = {
-    code: string;
-    name: string;
-    description: string;
-    symbol: string;
-};
+const DEFAULT_PRICE = 1;
 
 function CurrencyConverter() {
-    const { currentTemplate, setCurrentTemplate } = useContext(ConverterCurrentTemplateIndexContext);
-    const { templates, setTemplates } = useContext(ConverterTemplatesContext);
-    const { currencies, setCurrencies } = useContext(ConverterCurrenciesContext);
-    const price = useRef<number>(1);
-    const [sourceName, setSourceName] = useState<string>();
-    const [targetName, setTargetName] = useState<string>();
-    // TODO: refactor this ASAP
-    const currentDate = new Date();
-    const [fromDatetime, setFromDateTime] = useState<Date>(new Date(currentDate.getTime() - 2 * 60 * 1000));
-    const [toDatetime, setToDateTime] = useState<Date>(currentDate);
-
-    useEffect(() => {
-        setSourceName(getCurrencyNameByCode(templates[currentTemplate].sourceCode, currencies));
-        setTargetName(getCurrencyNameByCode(templates[currentTemplate].targetCode, currencies));
-    }, [currentTemplate, templates, currencies]);
+    const { setCurrencies } = useContext(ConverterCurrenciesContext);
+    const { exchange, setExchange } = useContext(ConverterExchangeContext);
+    const [price, setPrice] = useState<number>(DEFAULT_PRICE);
 
     useEffect(() => {
         const fetchCurrencies = async () => {
@@ -47,8 +32,8 @@ function CurrencyConverter() {
         fetchCurrencies().catch(console.error);
     }, []);
 
-    const handlePriceUpdate = (newPrice: number) => {
-        price.current = newPrice;
+    const handlePriceUpdate = (price: number) => {
+        setPrice(() => price);
     };
 
     // TODO: set max source input
@@ -56,20 +41,22 @@ function CurrencyConverter() {
         <div className={styles.converterWrapper}>
             <div className={styles.converter}>
                 <div className={styles.inputWrapper}>
-                    <CurrencyEqualPrice price={price.current} handlePriceUpdate={handlePriceUpdate} />
-                    <CurrencyExchangeInputs price={price.current} />
+                    <CurrencyEqualPrice price={price} handlePriceUpdate={handlePriceUpdate} />
+                    <CurrencyExchangeInputs price={price} />
                 </div>
                 <div className={styles.tableWrapper}>
-                    <Button text={"Save template"} type={"button"} />
+                    <ConverterTemplatesDropdown />
+                    <CurrencyDateTimeRange
+                        options={DEFAULT_DATE_TIME_RANGES_IN_MILLISECONDS}
+                        selectedOption={exchange.dateTimeRange}
+                    />
                     <CurrencyTable
-                        paymentCurrency={templates[currentTemplate].sourceCode}
-                        purchasedCurrency={templates[currentTemplate].targetCode}
-                        fromDateTime={fromDatetime}
-                        toDateTime={toDatetime}
+                        fromDateTime={new Date(new Date().getTime() - exchange.dateTimeRange)}
+                        toDateTime={new Date()}
                     />
                 </div>
             </div>
-            <Button text={"More about currency"} type={"button"} />
+            <MoreAboutCurrency />
         </div>
     );
 }
