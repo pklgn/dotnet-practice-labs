@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
+import { DEFAULT_PRICE_UPDATE_IN_MILLISECONDS } from "../../../model/CurrencyConverter/ConverterConstants";
+import { getCurrencyNameByCode } from "../../../model/CurrencyConverter/Currency";
 import {
     ConverterCurrenciesContext,
     ConverterExchangeContext,
 } from "../ConverterTemplatesContext/ConverterTemplatesContext";
 import { CurrencyTableRow } from "../CurrencyTable/CurrencyTable";
-import { getCurrencyNameByCode } from "../utils/currencyConverter";
 import styles from "./CurrencyEqualPrice.module.css";
 
 type CurrencyEqualPriceProps = {
@@ -17,26 +18,33 @@ function CurrencyEqualPrice(props: CurrencyEqualPriceProps) {
     const { currencies, setCurrencies } = useContext(ConverterCurrenciesContext);
     const { exchange, setExchange } = useContext(ConverterExchangeContext);
     const { price, handlePriceUpdate } = props;
-    useEffect(() => {
-        const fetchLastTemplatePrice = async () => {
-            const stepDate = new Date(new Date().getTime() - 20 * 1000);
-            const response = await fetch(
-                `/api/prices?PaymentCurrency=${exchange.sourceCode}&PurchasedCurrency=${
-                    exchange.targetCode
-                }&FromDateTime=${stepDate.toISOString()}&ToDateTime=${new Date().toISOString()}`,
-            );
-            if (response.ok) {
-                const json: CurrencyTableRow[] = await response.json();
-                const lastTableRow = [...json].pop();
-                if (lastTableRow) {
-                    handlePriceUpdate(lastTableRow.price);
-                    setCurrentDate(lastTableRow.dateTime);
-                }
+    const fetchLastExchangePrice = async () => {
+        const stepDate = new Date(new Date().getTime() - DEFAULT_PRICE_UPDATE_IN_MILLISECONDS);
+        const response = await fetch(
+            `/api/prices?PaymentCurrency=${exchange.sourceCode}&PurchasedCurrency=${
+                exchange.targetCode
+            }&FromDateTime=${stepDate.toISOString()}&ToDateTime=${new Date().toISOString()}`,
+        );
+        if (response.ok) {
+            const json: CurrencyTableRow[] = await response.json();
+            const lastTableRow = [...json].pop();
+            if (lastTableRow) {
+                handlePriceUpdate(lastTableRow.price);
+                setCurrentDate(lastTableRow.dateTime);
             }
-        };
+        }
+    };
 
-        fetchLastTemplatePrice().catch(console.error);
-    }, [exchange]);
+    useEffect(() => {
+        fetchLastExchangePrice().catch(console.error);
+        const intervalId = setInterval(() => {
+            fetchLastExchangePrice().catch(console.error);
+        }, DEFAULT_PRICE_UPDATE_IN_MILLISECONDS);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
 
     return (
         <>
