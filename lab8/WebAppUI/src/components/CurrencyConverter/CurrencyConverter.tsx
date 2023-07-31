@@ -36,7 +36,7 @@ function CurrencyConverter() {
         setPrice(() => price);
     };
 
-    // TODO: set max source input
+    // TODO: add preloader when server doesnt response
     return (
         <div className={styles.converterWrapper}>
             <div className={styles.converter}>
