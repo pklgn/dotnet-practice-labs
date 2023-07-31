@@ -9,13 +9,13 @@ export type InputProps = {
     placeholder?: string;
     value?: string;
     defaultValue?: string;
-    style?: any;
+    className?: string;
 };
 function Input(props: InputProps) {
-    const { type, onChange, placeholder, value, defaultValue, style } = props;
+    const { type, onChange, placeholder, value, defaultValue, className } = props;
     return (
         <input
-            className={`${styles.input} ${style ?? ""}`}
+            className={`${styles.input} ${className ?? ""}`}
             placeholder={placeholder ?? ""}
             value={value}
             defaultValue={defaultValue}

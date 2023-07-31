@@ -1,10 +1,10 @@
 import { ChangeEventHandler, useContext, useEffect, useLayoutEffect, useState } from "react";
+import { getCurrencyCodeByName, getCurrencyNameByCode } from "../../../model/CurrencyConverter/Currency";
 import {
     ConverterCurrenciesContext,
     ConverterExchangeContext,
 } from "../ConverterTemplatesContext/ConverterTemplatesContext";
 import CurrencyInput from "../CurrencyInput/CurrencyInput";
-import { getCurrencyCodeByName, getCurrencyNameByCode } from "../utils/currencyConverter";
 
 type CurrencyExchangeInputsProps = {
     price: number;
@@ -39,7 +39,6 @@ function CurrencyExchangeInputs(props: CurrencyExchangeInputsProps) {
     const handleSourceSelectOnChange: ChangeEventHandler<HTMLSelectElement> = event => {
         if (event.target.value) {
             setExchange(() => {
-                console.log(exchange);
                 return { ...exchange, sourceCode: getCurrencyCodeByName(event.target.value, currencies) };
             });
         }
@@ -48,7 +47,6 @@ function CurrencyExchangeInputs(props: CurrencyExchangeInputsProps) {
     const handleTargetSelectOnChange: ChangeEventHandler<HTMLSelectElement> = event => {
         if (event.target.value) {
             setExchange(() => {
-                console.log(exchange);
                 return { ...exchange, targetCode: getCurrencyCodeByName(event.target.value, currencies) };
             });
         }

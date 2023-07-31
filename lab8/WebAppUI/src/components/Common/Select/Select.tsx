@@ -10,6 +10,7 @@ export type SelectProps = {
 };
 function Select(props: SelectProps) {
     const { value, options, title, className, onChange } = props;
+
     return (
         <select className={`${styles.select} ${className ?? ""}`} title={title ?? ""} value={value} onChange={onChange}>
             {options.length !== 0 &&
