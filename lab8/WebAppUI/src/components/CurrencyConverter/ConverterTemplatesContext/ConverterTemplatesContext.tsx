@@ -4,10 +4,16 @@ import CurrencyConverter, { Currency } from "../CurrencyConverter";
 export type ConverterTemplate = {
     sourceCode: string;
     targetCode: string;
+    dateTimeRange: number;
 };
 
+const DEFAULT_DATETIME_RANGE = 1 * 60 * 1000;
 const DEFAULT_CONVERTER_CURRENT_TEMPLATE_INDEX = 0;
-const DEFAULT_CONVERTER_TEMPLATE: ConverterTemplate = { sourceCode: "AUD", targetCode: "JPY" };
+const DEFAULT_CONVERTER_TEMPLATE: ConverterTemplate = {
+    sourceCode: "ZAR",
+    targetCode: "JPY",
+    dateTimeRange: DEFAULT_DATETIME_RANGE,
+};
 
 // TODO: fix any type
 export const ConverterTemplatesContext = createContext<any>(null);
@@ -25,7 +31,7 @@ function CurrencyConverterContext() {
         <ConverterCurrenciesContext.Provider value={{ currencies, setCurrencies }}>
             <ConverterTemplatesContext.Provider value={{ templates, setTemplates }}>
                 <ConverterCurrentTemplateIndexContext.Provider
-                    value={{ currentTemplate: currentTemplateIndex, setCurrentTemplate: setCurrentTemplateIndex }}
+                    value={{ currentTemplateIndex, setCurrentTemplateIndex }}
                 >
                     <ConverterExchangeContext.Provider value={{ exchange, setExchange }}>
                         <CurrencyConverter />
