@@ -1,26 +1,33 @@
 .source {
-  font-family: Roboto, HelveticaNeue, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: normal;
-  color: #70757a;
+    font-family: Roboto, HelveticaNeue, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #70757a;
 }
 
 .target {
-  margin-bottom: 5px;
-  font-family: Open Sans, arial, sans-serif;
-  font-size: 36px;
-  font-weight: normal;
-  text-align: start;
+    margin-bottom: 5px;
+    font-family:
+        Open Sans,
+        arial,
+        sans-serif;
+    font-size: 36px;
+    font-weight: normal;
+    text-align: start;
 }
 
 .datetime {
-  display: flex;
-  margin-bottom: 16px;
-  font-family: Open Sans,Roboto,Arial,sans-serif;
-  font-size: 14px;
-  color: #9aa0a6;
+    display: flex;
+    margin-bottom: 16px;
+    font-family:
+        Open Sans,
+        Roboto,
+        Arial,
+        sans-serif;
+    font-size: 14px;
+    color: #9aa0a6;
 }
 
 .date {
-  margin-right: 10px;
+    margin-right: 10px;
 }

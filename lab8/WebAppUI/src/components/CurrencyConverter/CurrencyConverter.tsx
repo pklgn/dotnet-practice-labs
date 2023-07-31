@@ -17,7 +17,7 @@ const DEFAULT_PRICE = 1;
 
 function CurrencyConverter() {
     const { setCurrencies } = useContext(ConverterCurrenciesContext);
-    const { exchange, setExchange } = useContext(ConverterExchangeContext);
+    const { exchange } = useContext(ConverterExchangeContext);
     const [price, setPrice] = useState<number>(DEFAULT_PRICE);
 
     useEffect(() => {

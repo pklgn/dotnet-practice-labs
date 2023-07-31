@@ -1,19 +1,11 @@
 import { createContext, useState } from "react";
-import CurrencyConverter, { Currency } from "../CurrencyConverter";
-
-export type ConverterTemplate = {
-    sourceCode: string;
-    targetCode: string;
-    dateTimeRange: number;
-};
-
-const DEFAULT_DATETIME_RANGE = 1 * 60 * 1000;
-const DEFAULT_CONVERTER_CURRENT_TEMPLATE_INDEX = 0;
-const DEFAULT_CONVERTER_TEMPLATE: ConverterTemplate = {
-    sourceCode: "ZAR",
-    targetCode: "JPY",
-    dateTimeRange: DEFAULT_DATETIME_RANGE,
-};
+import {
+    ConverterTemplate,
+    DEFAULT_CONVERTER_CURRENT_TEMPLATE_INDEX,
+    DEFAULT_CONVERTER_TEMPLATE,
+} from "../../../model/CurrencyConverter/ConverterConstants";
+import { Currency } from "../../../model/CurrencyConverter/Currency";
+import CurrencyConverter from "../CurrencyConverter";
 
 // TODO: fix any type
 export const ConverterTemplatesContext = createContext<any>(null);

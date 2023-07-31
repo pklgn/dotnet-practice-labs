@@ -1,11 +1,11 @@
 .rating {
-  display: flex;
-  place-content: center;
-  font-size: 44px;
+    display: flex;
+    place-content: center;
+    font-size: 44px;
 }
 
 .grade {
-  flex-basis: 80px;
-  flex-shrink: 0;
-  padding-right: 12px;
+    flex-basis: 80px;
+    flex-shrink: 0;
+    padding-right: 12px;
 }

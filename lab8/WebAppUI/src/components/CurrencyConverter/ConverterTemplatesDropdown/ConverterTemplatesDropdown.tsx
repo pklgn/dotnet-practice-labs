@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
+import { ConverterTemplate } from "../../../model/CurrencyConverter/ConverterConstants";
 import Button from "../../Common/Button/Button";
 import ArrowDropDownIcon from "../../Icons/ArrowDropDownIcon/ArrowDropDownIcon";
 import {
     ConverterExchangeContext,
-    ConverterTemplate,
     ConverterTemplatesContext,
 } from "../ConverterTemplatesContext/ConverterTemplatesContext";
 import styles from "./ConverterTemplatesDropdown.module.css";

@@ -1,49 +1,49 @@
 .inputWrapper {
-  display: flex;
-  border: 1px solid #dadce0;
-  border-radius: 5px;
+    display: flex;
+    border: 1px solid #dadce0;
+    border-radius: 5px;
 }
 
 .input {
-  all: unset;
-  width: 100px;
-  height: 40px;
-  padding: 1px 6px 1px 12px;
-  margin: 0;
-  overflow: hidden;
-  font-family: arial,sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  color: #4d5156;
-  text-align: left;
-  background-color: #fff;
-  border: 0;
+    all: unset;
+    width: 100px;
+    height: 40px;
+    padding: 1px 6px 1px 12px;
+    margin: 0;
+    overflow: hidden;
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4d5156;
+    text-align: left;
+    background-color: #fff;
+    border: 0;
 }
 
 .selectWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 40px;
-  overflow: hidden;
-  font-size: 15px;
-  color: #4d5156;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    overflow: hidden;
+    font-size: 15px;
+    color: #4d5156;
 }
 
 .select {
-  all: unset;
-  width: 100%;
-  margin: 0 10px;
-  font-family: arial,sans-serif;
-  line-height: 40px;
-  cursor: pointer;
-  border: 0;
+    all: unset;
+    width: 100%;
+    margin: 0 10px;
+    font-family: arial, sans-serif;
+    line-height: 40px;
+    cursor: pointer;
+    border: 0;
 }
 
 .selectDivider {
-  position: absolute;
-  top: 8px;
-  bottom: 8px;
-  z-index: 3;
-  border-left: 1px solid #3c4043;
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    z-index: 3;
+    border-left: 1px solid #3c4043;
 }

@@ -19,10 +19,7 @@ function Review(props: ReviewProps) {
                 <div className={styles.text}>{props.text}</div>
             </div>
             <div className={styles.grade}>
-                <Grade
-                    grade={props.grade.grade}
-                    maxGrade={props.grade.maxGrade}
-                />
+                <Grade grade={props.grade.grade} maxGrade={props.grade.maxGrade} />
             </div>
         </div>
     );

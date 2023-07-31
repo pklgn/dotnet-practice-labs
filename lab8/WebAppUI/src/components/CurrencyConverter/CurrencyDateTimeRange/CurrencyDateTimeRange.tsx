@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { ConverterExchangeContext, ConverterTemplate } from "../ConverterTemplatesContext/ConverterTemplatesContext";
+import { ConverterTemplate } from "../../../model/CurrencyConverter/ConverterConstants";
+import { ConverterExchangeContext } from "../ConverterTemplatesContext/ConverterTemplatesContext";
 import styles from "./CurrencyDateTimeRange.module.css";
 
 type CurrencyDateTimeRangeProps = {

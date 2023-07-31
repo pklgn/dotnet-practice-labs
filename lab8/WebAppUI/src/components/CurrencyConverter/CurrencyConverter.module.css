@@ -1,27 +1,25 @@
 .converterWrapper {
-  max-width: 768px;
+    max-width: 768px;
 }
 
 .converter {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
-
 .inputWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
 }
 
 .tableWrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .datetime {
-  display: flex;
+    display: flex;
 }
-

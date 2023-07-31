@@ -1,6 +1,6 @@
 module.exports = {
-  arrowParens: "avoid",
-  endOfLine: "crlf",
-  printWidth: 120,
-  proseWrap: "always",
+    arrowParens: "avoid",
+    endOfLine: "crlf",
+    printWidth: 120,
+    proseWrap: "always",
 };

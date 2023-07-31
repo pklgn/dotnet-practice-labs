@@ -8,3 +8,17 @@ export const DEFAULT_DATE_TIME_RANGES_IN_MILLISECONDS = [
 ];
 
 export const DEFAULT_PRICE = 1;
+
+export type ConverterTemplate = {
+    sourceCode: string;
+    targetCode: string;
+    dateTimeRange: number;
+};
+
+export const DEFAULT_DATETIME_RANGE = 1 * 60 * 1000;
+export const DEFAULT_CONVERTER_CURRENT_TEMPLATE_INDEX = 0;
+export const DEFAULT_CONVERTER_TEMPLATE: ConverterTemplate = {
+    sourceCode: "ZAR",
+    targetCode: "JPY",
+    dateTimeRange: DEFAULT_DATETIME_RANGE,
+};

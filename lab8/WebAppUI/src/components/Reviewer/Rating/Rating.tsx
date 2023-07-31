@@ -17,11 +17,7 @@ function Rating(props: RatingProps) {
             <div className={styles.grade}>
                 <Grade grade={rating} maxGrade={maxRating} />
             </div>
-            <StarGrade
-                currentGrade={rating}
-                maxGrade={maxRating}
-                setGrade={setRating}
-            />
+            <StarGrade currentGrade={rating} maxGrade={maxRating} setGrade={setRating} />
         </div>
     );
 }
