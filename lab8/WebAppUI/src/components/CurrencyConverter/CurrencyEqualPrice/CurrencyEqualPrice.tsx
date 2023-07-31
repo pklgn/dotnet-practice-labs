@@ -15,8 +15,8 @@ type CurrencyEqualPriceProps = {
 
 function CurrencyEqualPrice(props: CurrencyEqualPriceProps) {
     const [currentDate, setCurrentDate] = useState<string>(new Date().toISOString());
-    const { currencies, setCurrencies } = useContext(ConverterCurrenciesContext);
-    const { exchange, setExchange } = useContext(ConverterExchangeContext);
+    const { currencies } = useContext(ConverterCurrenciesContext);
+    const { exchange } = useContext(ConverterExchangeContext);
     const { price, handlePriceUpdate } = props;
     const fetchLastExchangePrice = async () => {
         const stepDate = new Date(new Date().getTime() - DEFAULT_PRICE_UPDATE_IN_MILLISECONDS);
@@ -44,7 +44,12 @@ function CurrencyEqualPrice(props: CurrencyEqualPriceProps) {
         return () => {
             clearInterval(intervalId);
         };
-    }, []);
+        /*
+          TODO: in fact, useEffect should be called once to set the call interval
+          but the problem is that otherwise fetchLastExchangePrice will work with the old exchange state value,
+          which requires dependence on exchange. Perhaps it can be better.
+        */
+    }, [exchange]);
 
     return (
         <>
