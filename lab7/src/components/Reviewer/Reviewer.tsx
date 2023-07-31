@@ -46,18 +46,18 @@ function Reviewer() {
                 <form className={styles.form}>
                     <h1 className={styles.title}>How nice was my reply?</h1>
                     <Rating
-                        style={styles.rating}
+                        className={styles.rating}
                         rating={rating}
                         maxRating={MAX_RATING}
                         setRating={setRating}
                     />
                     <Textarea
-                        style={styles.textarea}
+                        className={styles.textarea}
                         value={text}
                         onChange={handleOnChange}
                     />
                     <Button
-                        style={styles.btn}
+                        className={styles.btn}
                         text="Send"
                         type="submit"
                         onClick={handleOnClick}

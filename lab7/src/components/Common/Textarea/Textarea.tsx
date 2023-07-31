@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 type TextareaProps = {
     value?: string;
     onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    // TODO: fix any type
-    style?: any;
+    // FIXED: fix any type
+    className?: string;
 };
 
 function Textarea(props: TextareaProps) {
@@ -22,7 +22,7 @@ function Textarea(props: TextareaProps) {
     return (
         <textarea
             ref={textareaRef}
-            className={`${styles.textarea} ${props.style ?? ""}`}
+            className={`${styles.textarea} ${props.className ?? ""}`}
             placeholder="What could we improve"
             onChange={props.onChange}
             value={props.value}

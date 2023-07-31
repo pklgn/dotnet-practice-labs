@@ -6,15 +6,15 @@ type ButtonProps = {
     text: string;
     type: ButtonType;
     onClick?: (event: React.MouseEvent) => void;
-    // TODO: fix any type
-    style?: any;
+    // FIXED: fix any type
+    className?: string;
 };
 
 function Button(props: ButtonProps) {
     return (
         <button
             type={props.type}
-            className={`${styles.btn} ${props.style ?? ""}`}
+            className={`${styles.btn} ${props.className ?? ""}`}
             onClick={props.onClick}
         >
             {props.text}

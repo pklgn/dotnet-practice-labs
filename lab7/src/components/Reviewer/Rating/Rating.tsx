@@ -6,14 +6,14 @@ type RatingProps = {
     rating: number;
     maxRating: number;
     setRating: (rating: number) => void;
-    // TODO: fix any type
-    style?: any;
+    // FIXED: fix any type
+    className?: string;
 };
 
 function Rating(props: RatingProps) {
     const { rating, maxRating, setRating } = props;
     return (
-        <div className={`${styles.rating} ${props.style ?? ""}`}>
+        <div className={`${styles.rating} ${props.className ?? ""}`}>
             <div className={styles.grade}>
                 <Grade grade={rating} maxGrade={maxRating} />
             </div>
