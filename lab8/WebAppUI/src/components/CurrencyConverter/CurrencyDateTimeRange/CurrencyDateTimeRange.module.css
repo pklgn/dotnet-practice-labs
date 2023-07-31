@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  place-content: center;
+  margin-bottom: 10px;
+}
+
+.dateTime {
+  margin-right: 10px;
+  font-family: Open Sans,Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.selected {
+  color: #3367d6;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
