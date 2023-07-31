@@ -1,0 +1,12 @@
+.tableWrapper {
+  width: 100%;
+  max-height: 120px;
+  overflow-y: auto;
+  font-family: Open Sans,Roboto,Arial,sans-serif;
+  font-size: 14px;
+}
+
+.tableRow {
+  display: flex;
+  justify-content: space-evenly;
+}

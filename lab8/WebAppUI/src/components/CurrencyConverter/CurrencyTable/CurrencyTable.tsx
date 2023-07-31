@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ConverterExchangeContext } from "../ConverterTemplatesContext/ConverterTemplatesContext";
+import styles from "./CurrencyTable.module.css";
 
 export type CurrencyTableRow = {
     source: string;
@@ -8,8 +10,6 @@ export type CurrencyTableRow = {
 };
 
 type CurrencyTableFilter = {
-    paymentCurrency: string;
-    purchasedCurrency: string;
     fromDateTime: Date;
     toDateTime?: Date;
 };
@@ -17,33 +17,34 @@ type CurrencyTableFilter = {
 type CurrencyTableProps = CurrencyTableFilter;
 
 function CurrencyTable(props: CurrencyTableProps) {
-    const { paymentCurrency, purchasedCurrency, fromDateTime, toDateTime } = props;
+    const { exchange } = useContext(ConverterExchangeContext);
+    const { fromDateTime, toDateTime } = props;
     const [rows, setRows] = useState<CurrencyTableRow[]>([]);
 
     useEffect(() => {
-        console.log(fromDateTime.toISOString());
         const fetchCurrencyData = async () => {
             const response = await fetch(
-                `/api/prices?PaymentCurrency=${paymentCurrency}&PurchasedCurrency=${purchasedCurrency}&FromDateTime=${fromDateTime.toISOString()}&ToDateTime=${toDateTime?.toISOString()}`,
+                `/api/prices?PaymentCurrency=${exchange.sourceCode}&PurchasedCurrency=${
+                    exchange.targetCode
+                }&FromDateTime=${fromDateTime.toISOString()}&ToDateTime=${new Date().toISOString()}`,
             );
             const data: CurrencyTableRow[] = await response.json();
             setRows(data);
         };
 
         fetchCurrencyData().catch(console.log);
-    }, [paymentCurrency, purchasedCurrency, fromDateTime, toDateTime]);
+    }, [exchange, fromDateTime, toDateTime]);
 
-    console.log();
     return (
-        <div>
+        <div className={styles.tableWrapper}>
             {rows.length !== 0 &&
                 rows.map((row, index) => (
-                    <div key={index}>
-                        <span>{row.source}</span>
-                        <span>{row.target}</span>
-                        <span>{row.price}</span>
-                        <span>{new Date(row.dateTime).toLocaleDateString("en-US")}</span>
-                        <span>{new Date(row.dateTime).toLocaleTimeString("en-US")}</span>
+                    <div key={index} className={styles.tableRow}>
+                        <div>{row.source}</div>
+                        <div>{row.target}</div>
+                        <div>{row.price}</div>
+                        <div>{new Date(row.dateTime).toLocaleDateString()}</div>
+                        <div>{new Date(row.dateTime).toLocaleTimeString()}</div>
                     </div>
                 ))}
         </div>
