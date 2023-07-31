@@ -34,9 +34,9 @@ function Reviewer() {
                 maxGrade: MAX_RATING,
             },
         };
-        setText(() => "");
-        setRating(() => 0);
-        setReviews(() => [review]);
+        setText("");
+        setRating(0);
+        setReviews([review]);
     };
 
     // TODO: add l10n
