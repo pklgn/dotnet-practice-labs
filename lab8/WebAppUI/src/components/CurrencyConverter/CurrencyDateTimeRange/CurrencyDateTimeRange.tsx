@@ -11,7 +11,7 @@ type CurrencyDateTimeRangeProps = {
 
 function CurrencyDateTimeRange(props: CurrencyDateTimeRangeProps) {
     const { selectedOption, options } = props;
-    const { exchange, setExchange } = useContext(ConverterExchangeContext);
+    const { _, setExchange } = useContext(ConverterExchangeContext);
 
     return (
         <div className={styles.wrapper}>
