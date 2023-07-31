@@ -18,30 +18,21 @@ function StarGrade(props: StarGradeProps) {
         <Star state="default" />
     ));
 
-    function handleMouseOver(event: React.SyntheticEvent<HTMLDivElement>) {
-        if (event.currentTarget.dataset && event.currentTarget.dataset.index) {
-            setGrade(Number(event.currentTarget.dataset.index) + 1);
-        }
-    }
-
     return (
         <div className={styles.starGrades}>
             {filledStars.length !== 0 &&
                 filledStars.map((filledStar, index) => (
-                    <div
-                        data-index={JSON.stringify(index)}
-                        key={index}
-                        onMouseOver={handleMouseOver}
-                    >
+                    <div key={index} onMouseOver={() => setGrade(index + 1)}>
                         {filledStar}
                     </div>
                 ))}
             {defaultStars.length !== 0 &&
                 defaultStars.map((defaultStar, index) => (
                     <div
-                        data-index={JSON.stringify(index + filledStars.length)}
                         key={index + filledStars.length}
-                        onMouseOver={handleMouseOver}
+                        onMouseOver={() =>
+                            setGrade(index + +filledStars.length + 1)
+                        }
                     >
                         {defaultStar}
                     </div>
