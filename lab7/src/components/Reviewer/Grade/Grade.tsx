@@ -1,10 +1,12 @@
 import styles from "./Grade.module.css";
 
-// TODO: maybe I shouldn't export props type
-export type GradeProps = {
+// FIXED: maybe I shouldn't export props type
+export type GradeType = {
     grade: number;
     maxGrade: number;
 };
+
+type GradeProps = GradeType;
 
 function Grade(props: GradeProps) {
     return (

@@ -3,13 +3,13 @@ import Textarea from "../Common/Textarea/Textarea";
 import Rating from "../Reviewer/Rating/Rating";
 import Review from "../Reviewer/Review/Review";
 import styles from "./Reviewer.module.css";
-import { GradeProps } from "../Reviewer/Grade/Grade";
 import Button from "../Common/Button/Button";
+import { GradeType } from "./Grade/Grade";
 
 type Review = {
     author: string;
     text: string;
-    grade: GradeProps;
+    grade: GradeType;
 };
 
 function Reviewer() {
