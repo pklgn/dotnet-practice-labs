@@ -1,5 +1,11 @@
+import {
+    CSSProperties,
+    ChangeEvent,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from "react";
 import styles from "./Textarea.module.css";
-import { useEffect, useRef } from "react";
 
 type TextareaProps = {
     value?: string;
@@ -9,23 +15,42 @@ type TextareaProps = {
 };
 
 function Textarea(props: TextareaProps) {
+    const [textAreaHeight, setTextAreaHeight] = useState<number | null>();
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    useEffect(() => {
+    const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        props.onChange(event);
+        setTextAreaHeight(null);
+    };
+
+    useLayoutEffect(() => {
         if (textareaRef.current) {
-            textareaRef.current.style.height = "inherit";
-            const scrollHeight = textareaRef.current.scrollHeight;
-            textareaRef.current.style.height = scrollHeight + "px";
+            setTextAreaHeight(null);
         }
-    });
+    }, []);
+
+    useLayoutEffect(() => {
+        if (textareaRef.current) {
+            if (textareaRef.current.value) {
+                setTextAreaHeight(textareaRef.current.scrollHeight);
+            } else {
+                setTextAreaHeight(null);
+            }
+        }
+    }, [props.value]);
+
+    const textAreaStyles: CSSProperties = {
+        height: textAreaHeight ? `${textAreaHeight}px` : "inherit",
+    };
 
     return (
         <textarea
             ref={textareaRef}
             className={`${styles.textarea} ${props.className ?? ""}`}
             placeholder="What could we improve"
-            onChange={props.onChange}
+            onChange={handleTextChange}
             value={props.value}
+            style={textAreaStyles}
         />
     );
 }
