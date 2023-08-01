@@ -15,6 +15,7 @@ public class StarHasAbsoluteMagnitudeRepository : Repository<StarHasAbsoluteMagn
     {
         return Entities.ToList();
     }
+
     public StarHasAbsoluteMagnitude GetById(int id)
     {
         return Entities.Where(s => s.Id == id).FirstOrDefault();

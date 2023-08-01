@@ -14,6 +14,7 @@ public class StarTypeRepository : Repository<StarType>, IStarTypeRepository
     {
         return Entities.ToList();
     }
+
     public StarType GetById(int id)
     {
         return Entities.Where(s => s.Id == id).FirstOrDefault();
