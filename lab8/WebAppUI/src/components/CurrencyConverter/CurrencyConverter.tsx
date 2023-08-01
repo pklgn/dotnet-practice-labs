@@ -10,7 +10,7 @@ import styles from "./CurrencyConverter.module.css";
 import CurrencyDateTimeRange from "./CurrencyDateTimeRange/CurrencyDateTimeRange";
 import CurrencyEqualPrice from "./CurrencyEqualPrice/CurrencyEqualPrice";
 import CurrencyExchangeInputs from "./CurrencyExchangeInputs/CurrencyExchangeInputs";
-import CurrencyTable from "./CurrencyTable/CurrencyTable";
+import CurrencyVisualization from "./CurrencyVisualization/CurrencyVisualization";
 import MoreAboutCurrency from "./MoreAboutCurrency/MoreAboutCurrency";
 
 const DEFAULT_PRICE = 1;
@@ -50,7 +50,7 @@ function CurrencyConverter() {
                         options={DEFAULT_DATE_TIME_RANGES_IN_MILLISECONDS}
                         selectedOption={exchange.dateTimeRange}
                     />
-                    <CurrencyTable
+                    <CurrencyVisualization
                         fromDateTime={new Date(new Date().getTime() - exchange.dateTimeRange)}
                         toDateTime={new Date()}
                     />

@@ -1,4 +1,5 @@
 export const CHART_OPTIONS = {
+    maintainAspectRatio: false,
     plugins: {
         legend: {
             display: false,

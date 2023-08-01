@@ -1,5 +1,3 @@
-import { useContext, useEffect, useState } from "react";
-import { ConverterExchangeContext } from "../ConverterTemplatesContext/ConverterTemplatesContext";
 import styles from "./CurrencyTable.module.css";
 
 export type CurrencyTableRow = {
@@ -9,31 +7,15 @@ export type CurrencyTableRow = {
     dateTime: string;
 };
 
-type CurrencyTableFilter = {
+export type CurrencyTableFilter = {
     fromDateTime: Date;
     toDateTime?: Date;
 };
 
-type CurrencyTableProps = CurrencyTableFilter;
+type CurrencyTableProps = { rows: CurrencyTableRow[] };
 
 function CurrencyTable(props: CurrencyTableProps) {
-    const { exchange } = useContext(ConverterExchangeContext);
-    const { fromDateTime, toDateTime } = props;
-    const [rows, setRows] = useState<CurrencyTableRow[]>([]);
-
-    useEffect(() => {
-        const fetchCurrencyData = async () => {
-            const response = await fetch(
-                `/api/prices?PaymentCurrency=${exchange.sourceCode}&PurchasedCurrency=${
-                    exchange.targetCode
-                }&FromDateTime=${fromDateTime.toISOString()}&ToDateTime=${new Date().toISOString()}`,
-            );
-            const data: CurrencyTableRow[] = await response.json();
-            setRows(data);
-        };
-
-        fetchCurrencyData().catch(console.log);
-    }, [exchange, fromDateTime, toDateTime]);
+    const { rows } = props;
 
     return (
         <div className={styles.tableWrapper}>

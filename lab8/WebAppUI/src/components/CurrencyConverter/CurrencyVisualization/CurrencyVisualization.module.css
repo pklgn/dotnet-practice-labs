@@ -1,0 +1,10 @@
+.contentWrapper {
+  width: 100%;
+  overflow-y: auto;
+  font-family:
+      Open Sans,
+      Roboto,
+      Arial,
+      sans-serif;
+  font-size: 14px;
+}

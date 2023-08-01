@@ -1,20 +1,18 @@
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { CHART_OPTIONS, DEFAULT_DATASETS } from "../../../model/CurrencyConverter/CurrencyLineChartConfig";
-import { ConverterExchangeContext } from "../ConverterTemplatesContext/ConverterTemplatesContext";
-import { CurrencyTableFilter, CurrencyTableRow } from "../CurrencyTable/CurrencyTable";
+import { CurrencyTableRow } from "../CurrencyTable/CurrencyTable";
 
 Chart.register(CategoryScale);
 
-type CurrencyLineChartProps = CurrencyTableFilter;
+type CurrencyLineChartProps = {
+    rows: CurrencyTableRow[];
+};
 
 function CurrencyLineChart(props: CurrencyLineChartProps) {
-    const { exchange } = useContext(ConverterExchangeContext);
-    const { fromDateTime, toDateTime } = props;
-    const [rows, setRows] = useState<CurrencyTableRow[]>([]);
-
+    const { rows } = props;
     const [chartData, setChartData] = useState({
         labels: rows.map(data => data.dateTime),
         datasets: [
@@ -24,20 +22,6 @@ function CurrencyLineChart(props: CurrencyLineChartProps) {
             },
         ],
     });
-
-    useEffect(() => {
-        const fetchCurrencyData = async () => {
-            const response = await fetch(
-                `/api/prices?PaymentCurrency=${exchange.sourceCode}&PurchasedCurrency=${
-                    exchange.targetCode
-                }&FromDateTime=${fromDateTime.toISOString()}&ToDateTime=${new Date().toISOString()}`,
-            );
-            const data: CurrencyTableRow[] = await response.json();
-            setRows(data);
-        };
-
-        fetchCurrencyData();
-    }, [exchange, fromDateTime, toDateTime]);
 
     useEffect(() => {
         setChartData(chartData => ({
@@ -55,7 +39,7 @@ function CurrencyLineChart(props: CurrencyLineChartProps) {
 
     return (
         <div className="chart-container">
-            <Line data={chartData} options={CHART_OPTIONS} />
+            <Line data={chartData} options={CHART_OPTIONS} width={250} height={150} />
         </div>
     );
 }
