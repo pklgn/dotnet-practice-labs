@@ -1,0 +1,5 @@
+1. Вид приложения с раскрытым списком "More about currency" ![Screenshot 2023-08-02 013655](https://github.com/pklgn/dotnet-practice-labs/assets/73781985/d28f06e0-4b37-4cf2-8e76-3be5d57dbdc0)
+2. Закрытый список "More about currency" ![Screenshot 2023-08-02 013704](https://github.com/pklgn/dotnet-practice-labs/assets/73781985/24dfe8c4-555c-4cb6-abcd-8a87407ba4e7)
+3. Раскрытый список шаблонов ![Screenshot 2023-08-02 013723](https://github.com/pklgn/dotnet-practice-labs/assets/73781985/d904e71a-61ff-437a-8dd3-a7a30e3a8a64)
+4. Выбранный шаблон из списка ![Screenshot 2023-08-02 014257](https://github.com/pklgn/dotnet-practice-labs/assets/73781985/b61a3aa0-5152-4d26-b7f1-54de5fd7de25)
+5. Табличный режим отображения ![Screenshot 2023-08-02 014410](https://github.com/pklgn/dotnet-practice-labs/assets/73781985/5fc80e1a-373a-4292-a4cf-ae69103b3cdb)
